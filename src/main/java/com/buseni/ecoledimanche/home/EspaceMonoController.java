@@ -5,12 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class AccueilMonoController {
+public class EspaceMonoController {
 	
-	@GetMapping("/accueilMono")
-	public String accueilMono(Model model){
+	@GetMapping("/espaceMono")
+	public String espaceMono(Model model){
 		
-		return "accueilMono";
+		return "espaceMono";
 	}
 	
 	@GetMapping("/seances")
