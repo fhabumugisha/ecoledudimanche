@@ -60,13 +60,7 @@
 						
 						
 						</li>
-						<li class="nav-item">
-						<form class="navbar-form " data-th-action="@{/logout}" method="post" action="">
-									<label for="mySubmit" class="btn">
-									<i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Log Out</label> <input id="mySubmit"
-										type="submit" value="Log Out" class="hidden" />
-								</form>
-						</li>
+						
 			</ul>
 			<form class="form-inline mt-2 mt-md-0">
 				<input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -84,13 +78,21 @@
 				<li class="nav-item"><a class="nav-link active" href="#">Mon tableau de bord
 							<span class="sr-only">(current)</span>
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="seances.html" th:href="@{seances}">Séances</a>
-					</li>
+					
+					<li class="nav-item"><a class="nav-link" href="seances.html" th:href="@{groupes}">Groupes</a>
+					<li class="nav-item"><a class="nav-link" href="seances.html" th:href="@{groupesAnnuel}">Groupes annuel</a>
+					
 					<li class="nav-item"><a class="nav-link" href="eleves" th:href="@{eleves}">Elèves
 							</a></li>
+							
+					<li class="nav-item"><a class="nav-link" href="seances.html" th:href="@{themes}">Thèmes</a>
+					<li class="nav-item"><a class="nav-link" href="seances.html" th:href="@{lecons}">Leçons</a>
+					</li>
+					
 					
 					<li class="nav-item"><a class="nav-link" href="#">Moniteurs
 							</a></li>
+			
 				</ul>
 
 <!-- 				<ul class="nav nav-pills flex-column"> -->
@@ -109,6 +111,20 @@
 					</li>
 					<li class="nav-item"><a class="nav-link" href="#">Statistiques</a>
 					</li>
+				</ul>
+				
+				<ul class="nav nav-pills flex-column">
+				<li class="nav-item">
+				<a class="nav-link active" href="#">Mon compte
+							<span class="sr-only">(current)</span>
+					</a></li>
+				<li class="nav-item">
+						<form class="navbar-form " data-th-action="@{/logout}" method="post" action="">
+									<label for="mySubmit" class="btn">
+									<i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Log Out</label> <input id="mySubmit"
+										type="submit" value="Log Out" class="hidden" />
+								</form>
+						</li>
 				</ul>
 			</nav>
 

@@ -1,4 +1,4 @@
-package com.buseni.ecoledimanche.home;
+package com.buseni.ecoledimanche.core.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -7,45 +7,30 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.buseni.ecoledimanche.core.domain.BaseEntityAudit;
+import com.buseni.ecoledimanche.core.domain.GroupeAnnuel;
 
 @Entity
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(name = "user_account")
-//@MappedSuperclass
-@Audited
-@EntityListeners(AuditingEntityListener.class)
-public  class UserAccount implements Serializable {
+//@AttributeOverride(name = "id", column = @Column(name = "user_account_id",   nullable = false))
+public  class UserAccount extends BaseEntityAudit implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 840767790155118289L;
 	
-
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
-	private Integer id;
 
 	@Column(unique = true)
 	@Email
@@ -55,12 +40,13 @@ public  class UserAccount implements Serializable {
 	@NotEmpty(message = "{error.user.requiredfield.password}")
 	private String password;
 
+	@Column(name ="est_coequipier")
+	private  Boolean estCoequipier;
 
-
-	private boolean enabled;
+	
 
 	@Column(name ="token_expired")
-	private boolean tokenExpired;
+	private Boolean tokenExpired;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -80,45 +66,21 @@ public  class UserAccount implements Serializable {
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles = new ArrayList<>();
 
-
-	@Column(name = "created_date", nullable =false,  updatable = false)
-	@CreatedDate
-	private Long createdDate;
-
-	@Column(name = "modified_date")
-	@LastModifiedDate
-	private Long modifiedDate;
-
-	@Column(name = "created_by")
-	@CreatedBy
-	private String createdBy;
-
-	@Column(name = "modified_by")
-	@LastModifiedBy
-	private String modifiedBy;
+	@ManyToOne
+	@JoinColumn(name="groupe_annuel_id")
+	private GroupeAnnuel groupeAnnuel;
+	
 	
 	public UserAccount() {
 
 	}
-	public UserAccount(Integer id, String email, String password) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.password = password;
-	}
-
+	
 	public UserAccount(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;
 	}
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	
 
 	public String getEmail() {
 		return email;
@@ -140,46 +102,37 @@ public  class UserAccount implements Serializable {
 
 	
 
-	public boolean isEnabled() {
-		return enabled;
-	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public boolean isTokenExpired() {
+	public Boolean isTokenExpired() {
 		return tokenExpired;
 	}
 
-	public void setTokenExpired(boolean tokenExpired) {
+	public void setTokenExpired(Boolean tokenExpired) {
 		this.tokenExpired = tokenExpired;
 	}
+	
 
 	@Override
 	public String toString() {
-		return "UserAccount [id=" + id + ", email=" + email + ", password=" + password + ", enabled=" + enabled
+		return "UserAccount [email=" + email + ", password=" + password + ", estCoequipier=" + estCoequipier
 				+ ", tokenExpired=" + tokenExpired + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", phoneNumber=" + phoneNumber + ", birthDate=" + birthDate + ", createdDate=" + createdDate
-				+ ", modifiedDate=" + modifiedDate + ", createdBy=" + createdBy + ", modifiedBy=" + modifiedBy + "]";
+				+ ", phoneNumber=" + phoneNumber + ", birthDate=" + birthDate + ", roles=" + roles + ", groupeAnnuel="
+				+ groupeAnnuel + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
-		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
-		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + (enabled ? 1231 : 1237);
+		result = prime * result + (estCoequipier ? 1231 : 1237);
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((groupeAnnuel == null) ? 0 : groupeAnnuel.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((modifiedBy == null) ? 0 : modifiedBy.hashCode());
-		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
 		result = prime * result + (tokenExpired ? 1231 : 1237);
 		return result;
 	}
@@ -188,7 +141,7 @@ public  class UserAccount implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -198,47 +151,27 @@ public  class UserAccount implements Serializable {
 				return false;
 		} else if (!birthDate.equals(other.birthDate))
 			return false;
-		if (createdBy == null) {
-			if (other.createdBy != null)
-				return false;
-		} else if (!createdBy.equals(other.createdBy))
-			return false;
-		if (createdDate == null) {
-			if (other.createdDate != null)
-				return false;
-		} else if (!createdDate.equals(other.createdDate))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (enabled != other.enabled)
+		if (estCoequipier != other.estCoequipier)
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (groupeAnnuel == null) {
+			if (other.groupeAnnuel != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!groupeAnnuel.equals(other.groupeAnnuel))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
 		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (modifiedBy == null) {
-			if (other.modifiedBy != null)
-				return false;
-		} else if (!modifiedBy.equals(other.modifiedBy))
-			return false;
-		if (modifiedDate == null) {
-			if (other.modifiedDate != null)
-				return false;
-		} else if (!modifiedDate.equals(other.modifiedDate))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -249,6 +182,11 @@ public  class UserAccount implements Serializable {
 			if (other.phoneNumber != null)
 				return false;
 		} else if (!phoneNumber.equals(other.phoneNumber))
+			return false;
+		if (roles == null) {
+			if (other.roles != null)
+				return false;
+		} else if (!roles.equals(other.roles))
 			return false;
 		if (tokenExpired != other.tokenExpired)
 			return false;
@@ -284,17 +222,21 @@ public  class UserAccount implements Serializable {
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	public Long getCreatedDate() {
-		return createdDate;
+
+	public Boolean isEstCoequipier() {
+		return estCoequipier;
 	}
-	public Long getModifiedDate() {
-		return modifiedDate;
+
+	public void setEstCoequipier(Boolean estCoequipier) {
+		this.estCoequipier = estCoequipier;
 	}
-	public String getCreatedBy() {
-		return createdBy;
+
+	public GroupeAnnuel getGroupeAnnuel() {
+		return groupeAnnuel;
 	}
-	public String getModifiedBy() {
-		return modifiedBy;
+
+	public void setGroupeAnnuel(GroupeAnnuel groupeAnnuel) {
+		this.groupeAnnuel = groupeAnnuel;
 	}
 	
 

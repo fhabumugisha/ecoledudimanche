@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessException extends Exception{
+	public BusinessException() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * 
 	 */
