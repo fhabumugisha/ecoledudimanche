@@ -3,13 +3,14 @@ package com.buseni.ecoledimanche.home;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/espaceMono")
 public class EspaceMonoController {
 	
-	@GetMapping("/espaceMono")
-	public String espaceMono(Model model){
-		
+	@GetMapping({"/", ""})
+	public String espaceMono(Model model){		
 		return "espaceMono";
 	}
 	

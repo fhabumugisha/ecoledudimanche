@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -29,10 +30,10 @@ import com.buseni.ecoledimanche.account.service.UserAccountService;
 
 @Controller
 //@Navigation(url="/signin", name="Sign in" , parent = HomeController.class)
-public class SigninController {
+public class LoginController {
 
 	
-	public  static final Logger LOGGER = LoggerFactory.getLogger(SigninController.class);
+	public  static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 	
 	
 	
@@ -50,22 +51,27 @@ public class SigninController {
 	 
 
 	
-	
-	@GetMapping(value="/signin")
+//	 @PostMapping(value="/login")
+//		public String login(Model model, HttpServletRequest request) throws ServletException{
+//		 request.login(request.getParameter("email"), request.getParameter("password"));
+//		 return "redirect:/espaceMono";
+//	 }
+//	
+	@GetMapping(value="/login")
 	public String login(@RequestParam(value = "error", required = false) String error, 
 			Model model, HttpServletRequest request){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(!(auth instanceof AnonymousAuthenticationToken)){
-			model.asMap().clear();
-			return "redirect:/";
-		}
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		if(!(auth instanceof AnonymousAuthenticationToken)){
+//			model.asMap().clear();
+//			return "redirect:/";
+//		}
 		Boolean browserSessionTimeout =  (Boolean) request.getSession().getAttribute("browserSessionTimeout");
 		if (BooleanUtils.isTrue(browserSessionTimeout)) {
 			String errorMessage  =  messages.getMessage("message.sessiontimeout", null, request.getLocale());
 			model.addAttribute("error", errorMessage);
 			request.getSession().removeAttribute("browserSessionTimeout");
 		}
-		return "home";
+		return "login";
 	}
 	
 	@GetMapping(value="/forgot-password")

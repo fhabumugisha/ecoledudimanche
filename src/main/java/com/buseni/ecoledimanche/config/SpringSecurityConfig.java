@@ -33,42 +33,62 @@ public class SpringSecurityConfig   extends WebSecurityConfigurerAdapter
 	
 	
 	@Autowired
+	
 	public  void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { 
-		//auth.userDetailsService(userAccountService).passwordEncoder(passwordEncoder());
-		auth.inMemoryAuthentication().withUser("admin@edd").password("password").roles("MONITEUR");
+		auth.userDetailsService(userAccountService).passwordEncoder(passwordEncoder());
+		//auth.inMemoryAuthentication().withUser("admin@edd").password("password").roles("MONITEUR");
 	}
 	
 	@Autowired
 	private  DataSource dataSource;
 	
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {
+//		 http.antMatcher("/espaceMono/**").authorizeRequests().anyRequest().hasRole("MONITEUR")
+//		.and()
+//			.formLogin().loginPage("/signin").permitAll().failureUrl("/signin?error").usernameParameter("email")
+//				.passwordParameter("password").successHandler(savedRequestAwareAuthenticationSuccessHandler())
+//        .and()
+//        	.logout().logoutUrl("/logout").logoutSuccessUrl("/signin?logout").permitAll()
+//        	.deleteCookies("JSESSIONID")
+//        .and()
+//        	.exceptionHandling().accessDeniedPage("/error403")
+//        .and()
+//           .sessionManagement()
+//           .maximumSessions(1)
+//             .sessionRegistry(sessionRegistry())
+//             .expiredUrl("/signin?expired")
+//             .and()
+//          .and()
+//        	//.rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(604800)
+//        //.and()
+//        .csrf().disable();
+//	}
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		 http.antMatcher("/espaceMono/**").authorizeRequests().anyRequest().hasRole("MONITEUR")
+		 http.authorizeRequests()
+		// .antMatchers("/","/home").permitAll()
+		 .anyRequest().authenticated()
 		.and()
-			.formLogin().loginPage("/home").loginProcessingUrl("/sign").permitAll().failureUrl("/signin?error").usernameParameter("email")
-				.passwordParameter("password").successHandler(savedRequestAwareAuthenticationSuccessHandler())
+			.formLogin().loginPage("/login").permitAll().usernameParameter("email")
+				.passwordParameter("password")
+				
         .and()
-        	.logout().logoutUrl("/logout").logoutSuccessUrl("/signin?logout").permitAll()
-        	.deleteCookies("JSESSIONID")
-        .and()
-        	.exceptionHandling().accessDeniedPage("/error403")
-        .and().sessionManagement().maximumSessions(1)
-             .sessionRegistry(sessionRegistry())
-             .expiredUrl("/signin?expired")
-             .and()
-          .and()
-        	.rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(604800)
-        .and().csrf().disable();
+        	.logout().permitAll() 	
+         .and()
+         .rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(604800)	;
 	}
 	@Bean(name = "sessionRegistry")
 	public SessionRegistry sessionRegistry() {
 		 return new SessionRegistryImpl();
 	}
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//	web.ignoring().antMatchers("/resources/**").antMatchers("/static/**");
-//	 
-//	}
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	web.ignoring().antMatchers("/resources/**").antMatchers("/static/**").antMatchers("/css/**").antMatchers("/images/**");
+	 
+	}
 	
 	@Bean(name="customSavedRequestAwareAuthenticationSuccessHandler")
 	public  CustomSavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler() { 

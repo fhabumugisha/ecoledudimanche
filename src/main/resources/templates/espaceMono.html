@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
@@ -40,6 +40,33 @@
 				</li>
 				<li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Aide</a></li>
+				<li class="nav-item dropdown">
+					<a id="dLabel" class="nav-link dropdown-toggle"  href="#"> 
+					
+							<span sec:authentication="name">Bob</span></a>
+							<div  class="dropdown-menu" aria-labelledby="dLabel">
+								<a class="dropdown-item" href="#">
+								<form class="navbar-form " data-th-action="@{/logout}" method="post" action="">
+									<label for="mySubmit" class="btn">
+									<span class="glyphicon glyphicon-log-out"></span> &nbsp;Log Out</label> <input id="mySubmit"
+										type="submit" value="Go" class="hidden" />
+								</form>
+								
+								</a>
+									
+								
+								
+							</div>
+						
+						
+						</li>
+						<li class="nav-item">
+						<form class="navbar-form " data-th-action="@{/logout}" method="post" action="">
+									<label for="mySubmit" class="btn">
+									<i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Log Out</label> <input id="mySubmit"
+										type="submit" value="Log Out" class="hidden" />
+								</form>
+						</li>
 			</ul>
 			<form class="form-inline mt-2 mt-md-0">
 				<input class="form-control mr-sm-2" type="text" placeholder="Search">
