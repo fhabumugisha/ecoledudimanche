@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title  th:text="#{groupes.title}">Gestion Club biblique - Espace Mono</title>
+<title>Gestion Club biblique - Espace Mono</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -105,104 +105,75 @@
 			</nav>
 
 			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-			
-			<div th:if="${message}" class="alert alert-success" th:text="${message}">Cool</div>
-			<h4 class="sub-header" th:text="#{groupes.list.title}">Listing groupes</h4>
-					<div class="well well-sm">
-			
-				<a href="/editGroupe" th:href="@{/groupes/new}">  			
-  				<button type="button" class="btn  btn-primary btn-xs">
-         			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	
-         			<span th:text="#{list.add}">Add</span>
-       			</button>
-				</a> 
-			</div>
-			
-			
-			
+			<h1>Groupes</h1>
 			<div class="row">
-				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">La liste des séances</div>
-						<!-- /.panel-heading -->
-						<div class="panel-body">
-							<table width="100%"
-								class="table table-striped table-bordered table-hover"
-								id="dataTables-example">
-								<thead>
-									<tr>
-										<th >#</th>
-										<th th:text="#{groupe.field.name}">Name</th>
-										<th th:text="#{groupe.field.description}">Description</th>
-										<th th:text="#{groupe.field.enabled}">Actif</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-
-									<tr th:each="groupe : ${groupes}"
-										th:classappend="${groupeStat.odd}? 'odd'">
-										<td th:text="${groupe.id}">1</td>
-										<td th:text="${groupe.name}">Fourmiz</td>
-										<td th:text="${groupe.description}">6ans à 7 ans</td>
-										<td th:text="${groupe.enabled}">Oui</td>
-										<td>
-											<a href="#"
-													th:href="@{/groupes/edit(id=${groupe.id})}">
-
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-pencil"></span>&nbsp; <span
-																th:text="#{list.edit}">edit</span>
-														</button>
-
-												</a>
-												 <a href="#"
-													th:href="@{/groupes/delete(id=${groupe.id})}"
-													class="deleteGroupe">
-
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-trash"></span>&nbsp; <span
-																th:text="#{list.delete}">delete</span>
-														</button>
-
-
-												</a>
-										</td>
+				<div class="col-md-8">
+					
+				
+						<div class="card">
+						<div class="card-header">Editer un groupe</div>
+						<div class="card-block">
+								<form>
+									<div class="form-group">
+										<label for="exampleInputEmail1">Titre</label> <input
+											type="email" class="form-control" id="exampleInputEmail1"
+											aria-describedby="emailHelp" placeholder="Titre de la séance">
 										
-									</tr>
-									<tr th:remove="all" class="odd gradeX">
-										<td>Trident</td>
-										<td>Internet Explorer 4.0</td>
-										<td>Win 95+</td>
-										<td class="center">4</td>
-										<td class="center">X</td>
-									</tr>
-									<tr th:remove="all" class="even gradeC">
-										<td>Trident</td>
-										<td>Internet Explorer 5.0</td>
-										<td>Win 95+</td>
-										<td class="center">5</td>
-										<td class="center">C</td>
-									</tr>
-									<tr th:remove="all" class="odd gradeA">
-										<td>Trident</td>
-										<td>Internet Explorer 5.5</td>
-										<td>Win 95+</td>
-										<td class="center">5.5</td>
-										<td class="center">A</td>
-									</tr>
+									</div>
 									
-
-								</tbody>
-							</table>
-							
-						</div>
-						<!-- /.panel-body -->
+									
+									<div class="form-group">
+										<label for="exampleSelect2">Moniteurs</label> <select
+											multiple class="form-control" id="exampleSelect2">
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="exampleTextarea">Description</label>
+										<textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="exampleInputFile">Pièce jointe</label> <input
+											type="file" class="form-control-file" id="exampleInputFile"
+											aria-describedby="fileHelp"> <small id="fileHelp"
+											class="form-text text-muted">Vous pouvez mettre le document utilisé pour votre séance</small>
+									</div>
+									<fieldset class="form-group">
+										<legend>Categorie séance</legend>
+										<div class="form-check">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="optionsRadios"
+												id="optionsRadios1" value="option1" checked> Lecture bible
+											</label>
+										</div>
+										<div class="form-check">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="optionsRadios"
+												id="optionsRadios2" value="option2"> Jeux biblique
+											</label>
+										</div>
+										<div class="form-check disabled">
+											<label class="form-check-label"> <input type="radio"
+												class="form-check-input" name="optionsRadios"
+												id="optionsRadios3" value="option3" disabled> Préparation spéctacle
+											</label>
+										</div>
+									</fieldset>
+									<a  th:href="@{groupes}" class="btn btn-default">Annuler</a>
+									<button type="submit" class="btn btn-primary">Enregistrer</button>
+								</form>
+							</div>
 					</div>
-					<!-- /.panel -->
+					
+					
 				</div>
-				<!-- /.col-lg-12 -->
 			</div>
+			
+			
 
 			</main>
 		</div>

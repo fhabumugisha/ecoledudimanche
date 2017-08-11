@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title  th:text="#{groupes.title}">Gestion Club biblique - Espace Mono</title>
+<title>Gestion Club biblique - Espace Mono</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -105,20 +105,16 @@
 			</nav>
 
 			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-			
-			<div th:if="${message}" class="alert alert-success" th:text="${message}">Cool</div>
-			<h4 class="sub-header" th:text="#{groupes.list.title}">Listing groupes</h4>
-					<div class="well well-sm">
-			
-				<a href="/editGroupe" th:href="@{/groupes/new}">  			
-  				<button type="button" class="btn  btn-primary btn-xs">
-         			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	
-         			<span th:text="#{list.add}">Add</span>
-       			</button>
-				</a> 
+			<h1>Séances</h1>
+			<div class="row">
+				<div class="col-md-8">
+					<p>
+					<a class="btn btn-primary"  data-toggle="collapse" th:href="@{groupes/new}" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Ajouter un group</a>
+				</p>
+				
+					
+				</div>
 			</div>
-			
-			
 			
 			<div class="row">
 				<div class="col-lg-12">
@@ -131,71 +127,176 @@
 								id="dataTables-example">
 								<thead>
 									<tr>
-										<th >#</th>
-										<th th:text="#{groupe.field.name}">Name</th>
-										<th th:text="#{groupe.field.description}">Description</th>
-										<th th:text="#{groupe.field.enabled}">Actif</th>
-										<th>Actions</th>
+										<th>Rendering engine</th>
+										<th>Browser</th>
+										<th>Platform(s)</th>
+										<th>Engine version</th>
+										<th>CSS grade</th>
 									</tr>
 								</thead>
 								<tbody>
-
-									<tr th:each="groupe : ${groupes}"
-										th:classappend="${groupeStat.odd}? 'odd'">
-										<td th:text="${groupe.id}">1</td>
-										<td th:text="${groupe.name}">Fourmiz</td>
-										<td th:text="${groupe.description}">6ans à 7 ans</td>
-										<td th:text="${groupe.enabled}">Oui</td>
-										<td>
-											<a href="#"
-													th:href="@{/groupes/edit(id=${groupe.id})}">
-
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-pencil"></span>&nbsp; <span
-																th:text="#{list.edit}">edit</span>
-														</button>
-
-												</a>
-												 <a href="#"
-													th:href="@{/groupes/delete(id=${groupe.id})}"
-													class="deleteGroupe">
-
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-trash"></span>&nbsp; <span
-																th:text="#{list.delete}">delete</span>
-														</button>
-
-
-												</a>
-										</td>
-										
-									</tr>
-									<tr th:remove="all" class="odd gradeX">
+									<tr class="odd gradeX">
 										<td>Trident</td>
 										<td>Internet Explorer 4.0</td>
 										<td>Win 95+</td>
 										<td class="center">4</td>
 										<td class="center">X</td>
 									</tr>
-									<tr th:remove="all" class="even gradeC">
+									<tr class="even gradeC">
 										<td>Trident</td>
 										<td>Internet Explorer 5.0</td>
 										<td>Win 95+</td>
 										<td class="center">5</td>
 										<td class="center">C</td>
 									</tr>
-									<tr th:remove="all" class="odd gradeA">
+									<tr class="odd gradeA">
 										<td>Trident</td>
 										<td>Internet Explorer 5.5</td>
 										<td>Win 95+</td>
 										<td class="center">5.5</td>
 										<td class="center">A</td>
 									</tr>
-									
+									<tr class="even gradeA">
+										<td>Trident</td>
+										<td>Internet Explorer 6</td>
+										<td>Win 98+</td>
+										<td class="center">6</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="odd gradeA">
+										<td>Trident</td>
+										<td>Internet Explorer 7</td>
+										<td>Win XP SP2+</td>
+										<td class="center">7</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="even gradeA">
+										<td>Trident</td>
+										<td>AOL browser (AOL desktop)</td>
+										<td>Win XP</td>
+										<td class="center">6</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Firefox 1.0</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td class="center">1.7</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Firefox 1.5</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td class="center">1.8</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Firefox 2.0</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td class="center">1.8</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Firefox 3.0</td>
+										<td>Win 2k+ / OSX.3+</td>
+										<td class="center">1.9</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Camino 1.0</td>
+										<td>OSX.2+</td>
+										<td class="center">1.8</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Camino 1.5</td>
+										<td>OSX.3+</td>
+										<td class="center">1.8</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Netscape 7.2</td>
+										<td>Win 95+ / Mac OS 8.6-9.2</td>
+										<td class="center">1.7</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Netscape Browser 8</td>
+										<td>Win 98SE+</td>
+										<td class="center">1.7</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Netscape Navigator 9</td>
+										<td>Win 98+ / OSX.2+</td>
+										<td class="center">1.8</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Mozilla 1.0</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td class="center">1</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Mozilla 1.1</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td class="center">1.1</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Mozilla 1.2</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td class="center">1.2</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Mozilla 1.3</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td class="center">1.3</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Mozilla 1.4</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td class="center">1.4</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Mozilla 1.5</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td class="center">1.5</td>
+										<td class="center">A</td>
+									</tr>
+									<tr class="gradeA">
+										<td>Gecko</td>
+										<td>Mozilla 1.6</td>
+										<td>Win 95+ / OSX.1+</td>
+										<td class="center">1.6</td>
+										<td class="center">A</td>
+									</tr>
 
 								</tbody>
 							</table>
-							
+							<!-- /.table-responsive -->
+							<div class="well">
+								<h4>La liste des séances</h4>
+								<p>Enseignements, activités, etc...</p>
+							</div>
 						</div>
 						<!-- /.panel-body -->
 					</div>

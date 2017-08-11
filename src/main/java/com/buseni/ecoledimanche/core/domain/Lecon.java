@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -38,6 +39,7 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 	@NotEmpty
 	private String titre;
 	
+	@NotEmpty
 	@Lob
 	@Column(length=500)
 	private String description;
@@ -46,6 +48,7 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 	@Column(length=500)
 	private String commentaires;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="theme_lecon_id")
 	private ThemeLecon themeLecon;

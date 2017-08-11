@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,6 +23,7 @@ public class Groupe  extends BaseEntityAudit implements Serializable{
 	@NotEmpty
 	private String name;
 	
+	@NotEmpty
 	@Lob
 	@Column(length=500)
 	private String description;

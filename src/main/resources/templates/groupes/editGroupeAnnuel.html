@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title  th:text="#{groupes.title}">Gestion Club biblique - Espace Mono</title>
+<title th:text="${groupeAnnuel.id} ? #{groupeAnnuel.edit.title} : #{groupeAnnuel.create.title}">Edit groupe annuel</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -16,9 +16,11 @@
 	crossorigin="anonymous">
 
 <!-- Custom styles for this template -->
-<link href="dashboard.css" rel="stylesheet"
+<link href="../../static/css/dashboard.css" rel="stylesheet"
 	th:href="@{css/dashboard.css}" />
 
+<link href="../../static/vendor/chosen/chosen.min.css" rel="stylesheet"
+	th:href="@{vendor/chosen/chosen.min.css}" />
 <!-- DataTables CSS -->
 <link
 	href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css"
@@ -28,6 +30,9 @@
 <link
 	href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap4.min.css"
 	rel="stylesheet" />
+	
+	
+	
 </head>
 
 <body>
@@ -106,103 +111,91 @@
 
 			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
 			
+			
 			<div th:if="${message}" class="alert alert-success" th:text="${message}">Cool</div>
-			<h4 class="sub-header" th:text="#{groupes.list.title}">Listing groupes</h4>
-					<div class="well well-sm">
-			
-				<a href="/editGroupe" th:href="@{/groupes/new}">  			
-  				<button type="button" class="btn  btn-primary btn-xs">
-         			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	
-         			<span th:text="#{list.add}">Add</span>
-       			</button>
-				</a> 
-			</div>
-			
 			
 			
 			<div class="row">
-				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">La liste des séances</div>
-						<!-- /.panel-heading -->
-						<div class="panel-body">
-							<table width="100%"
-								class="table table-striped table-bordered table-hover"
-								id="dataTables-example">
-								<thead>
-									<tr>
-										<th >#</th>
-										<th th:text="#{groupe.field.name}">Name</th>
-										<th th:text="#{groupe.field.description}">Description</th>
-										<th th:text="#{groupe.field.enabled}">Actif</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-								<tbody>
+				<div class="col-md-8">
+					
+				
+						<div class="card">
+						<div class="card-header"><span th:text="${groupeAnnuel.id} ? #{groupeAnnuel.edit.title} : #{groupeAnnuel.create.title}">Editer un groupe</span> </div>
+						<div class="card-block">
+							<form role="form" action="#" th:action="@{/groupes-annuel/save}" th:object="${groupeAnnuel}" method="post">
 
-									<tr th:each="groupe : ${groupes}"
-										th:classappend="${groupeStat.odd}? 'odd'">
-										<td th:text="${groupe.id}">1</td>
-										<td th:text="${groupe.name}">Fourmiz</td>
-										<td th:text="${groupe.description}">6ans à 7 ans</td>
-										<td th:text="${groupe.enabled}">Oui</td>
-										<td>
-											<a href="#"
-													th:href="@{/groupes/edit(id=${groupe.id})}">
-
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-pencil"></span>&nbsp; <span
-																th:text="#{list.edit}">edit</span>
-														</button>
-
-												</a>
-												 <a href="#"
-													th:href="@{/groupes/delete(id=${groupe.id})}"
-													class="deleteGroupe">
-
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-trash"></span>&nbsp; <span
-																th:text="#{list.delete}">delete</span>
-														</button>
-
-
-												</a>
-										</td>
-										
-									</tr>
-									<tr th:remove="all" class="odd gradeX">
-										<td>Trident</td>
-										<td>Internet Explorer 4.0</td>
-										<td>Win 95+</td>
-										<td class="center">4</td>
-										<td class="center">X</td>
-									</tr>
-									<tr th:remove="all" class="even gradeC">
-										<td>Trident</td>
-										<td>Internet Explorer 5.0</td>
-										<td>Win 95+</td>
-										<td class="center">5</td>
-										<td class="center">C</td>
-									</tr>
-									<tr th:remove="all" class="odd gradeA">
-										<td>Trident</td>
-										<td>Internet Explorer 5.5</td>
-										<td>Win 95+</td>
-										<td class="center">5.5</td>
-										<td class="center">A</td>
-									</tr>
+								<div th:if="${#fields.hasGlobalErrors()}"
+									class="alert alert-danger">
+									<ul>
+										<li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Input
+											is incorrect</li>
+									</ul>
+								</div>
+								<input type="text" hidden="hidden" th:field="*{id}" class="hidden" />
+								
+								<div class="form-group" th:classappend="${#fields.hasErrors('anneeScolaire')}? has-error">
 									
+									<label for="name" th:text="#{groupeAnnuel.field.anneeScolaire}">Année scolaire</label>
+									
+									 <input
+										type="text" class="form-control" id="name" th:field="*{anneeScolaire}"  required="required"  placeholder="Entrez l'année scolaire"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('anneeScolaire')}" th:errors="*{anneeScolaire}">Required field</span>
+								</div>
 
-								</tbody>
-							</table>
+
+								
+								<div class="form-group" th:classappend="${#fields.hasErrors('description')}? has-error">
+									<label for="description">Description</label>
+									<textarea class="form-control" id="description" rows="3"  th:field="*{description}"  required="required" ></textarea>
+									<span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Required field</span>
+								</div>
+
+								<div class="form-group">
+										<label for="groupe">Groupe</label> 
+										
+										<select th:field="*{groupe.id}"
+											 class="form-control" id="groupe">
+											
+										<option th:each="groupe : ${groupes}" th:value="${groupe.id}"		th:text="${groupe.name}">Fourmiz</option>
+										</select>
+										<span class="text-danger" th:if="${#fields.hasErrors('groupe')}" th:errors="*{groupe}">Required field</span>
+									</div>
+
+								
+								<div class="form-group">
+										<label for="moniteurs">Moniteurs</label> 
+										<select multiple
+											 class="form-control moniteur_select_box" id="moniteurs">
+											<option value="1">Fabrice</option>
+											<option value="2">Halle</option>
+											<option value="3">Esther</option>
+											
+										</select>
+									</div>
+									
+									
+								<div class="form-check">
+									<label class="form-check-label"> 
+									<input type="checkbox" th:field="*{enabled}" class="form-check-input"/> <span th:text="#{groupe.field.enabled}">Enabled</span> 
+									</label>
+								</div>
+
 							
+								<a href="#" th:href="@{groupes}" role="button" class="btn  btn-secondary">  			
+  									
+         								<span th:text="#{cancel.button.label}">Cancel</span>
+       								
+									</a>
+								<button type="submit" th:text="${groupe.id} ? #{update.button.label} : #{add.button.label}"  class="btn btn-primary">Enregistrer</button>
+							</form>
 						</div>
-						<!-- /.panel-body -->
 					</div>
-					<!-- /.panel -->
+					
+					
 				</div>
-				<!-- /.col-lg-12 -->
 			</div>
+			
+			
 
 			</main>
 		</div>
@@ -231,9 +224,18 @@
 		src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+		
+		<script src="../../static/vendor/chosen/chosen.jquery.js"
+		th:src="@{vendor/chosen/chosen.jquery.js}"></script>
 
 	<script>
     $(document).ready(function() {
+    	
+    	 $(".moniteur_select_box").chosen({
+    		    disable_search_threshold: 10,
+    		    no_results_text: "Oops, pas de résultat!",
+    		    width: "95%"
+    		  });
         $('#dataTables-example').DataTable({
             responsive: true
         });

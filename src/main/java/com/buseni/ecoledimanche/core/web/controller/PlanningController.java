@@ -22,100 +22,100 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.buseni.ecoledimanche.breadcrumbs.Navigation;
-import com.buseni.ecoledimanche.core.domain.Eleve;
-import com.buseni.ecoledimanche.core.service.EleveService;
+import com.buseni.ecoledimanche.core.domain.Planning;
+import com.buseni.ecoledimanche.core.service.PlanningService;
 import com.buseni.ecoledimanche.exception.BusinessException;
 import com.buseni.ecoledimanche.exception.ErrorsHelper;
 import com.buseni.ecoledimanche.utils.PageWrapper;
 
 
 @Controller
-@Navigation(url="/eleves", name="Liste des élèves", parent={  EspaceMonoController.class})
-public class EleveController {
-	public static final Logger LOGGER = LoggerFactory.getLogger( EleveController.class );
+@Navigation(url="/planning", name="Planning", parent={  EspaceMonoController.class})
+public class PlanningController {
+	public static final Logger LOGGER = LoggerFactory.getLogger( PlanningController.class );
 	
 	@Autowired
-	private EleveService eleveService;
+	private PlanningService planningService;
 	
-	@GetMapping("/eleves")
-	public String eleves(Model model, Pageable page){	
-		LOGGER.info("IN: Eleves/list-GET");
+	@GetMapping("/planning")
+	public String plannings(Model model, Pageable page){	
+		LOGGER.info("IN: Planning/list-GET");
 
-		Page<Eleve> pageEleves = eleveService.findAll(page);
-		PageWrapper<Eleve> pageWrapper = new PageWrapper<Eleve>(pageEleves, "/eleves");
+		Page<Planning> pagePlannings = planningService.findAll(page);
+		PageWrapper<Planning> pageWrapper = new PageWrapper<Planning>(pagePlannings, "/planning");
 		model.addAttribute("page", pageWrapper);
-		model.addAttribute("eleves", pageEleves.getContent());	
-		if(!model.containsAttribute("eleve")){
-			model.addAttribute("eleve", new Eleve());
+		model.addAttribute("plannings", pagePlannings.getContent());	
+		if(!model.containsAttribute("planning")){
+			model.addAttribute("planning", new Planning());
 		}
-		return "eleves/listeEleves";
+		return "planning/listePlanning";
 	}
 	
 	
-	@GetMapping("/eleves/edit")
-	public String editEleve(@RequestParam(value="id", required=true) Integer id, Model model, HttpServletRequest request){			
-		LOGGER.info("IN: Eleves/edit-GET");
+	@GetMapping("/planning/edit")
+	public String editPlanning(@RequestParam(value="id", required=true) Integer id, Model model, HttpServletRequest request){			
+		LOGGER.info("IN: Planning/edit-GET");
 		if (isRememberMeAuthenticated()) {
 			//send login for update
-			setRememberMeTargetUrlToSession(request, "/eleves/edit?id="+id);
+			setRememberMeTargetUrlToSession(request, "/planning/edit?id="+id);
 			model.addAttribute("loginUpdate", true);
 			return "signin";
 		}
-		Eleve eleve =  eleveService.findById(id);
-		model.addAttribute("eleve", eleve);
-		return "eleves/editEleve";
+		Planning planning =  planningService.findById(id);
+		model.addAttribute("planning", planning);
+		return "planning/editPlanning";
 	}
 
-	@GetMapping("/eleves/new")
-	public String addEleve(Model model){		
-		LOGGER.info("IN: Eleves/new-GET");
-		model.addAttribute("eleve", new Eleve());
-		return "eleves/editEleve";
+	@GetMapping("/planning/new")
+	public String addPlanning(Model model){		
+		LOGGER.info("IN: Planning/new-GET");
+		model.addAttribute("planning", new Planning());
+		return "planning/editPlanning";
 	}
 	
-	@GetMapping("/eleves/delete")
-	public String deleteEleve(@RequestParam(value="id", required=true) Integer id, RedirectAttributes attributes){	
+	@GetMapping("/planning/delete")
+	public String deletePlanning(@RequestParam(value="id", required=true) Integer id, RedirectAttributes attributes){	
 		
 		LOGGER.info("IN: Provinces/delete-GET");
-		eleveService.delete(id);
-		String message = "Eleve " + id + " was successfully deleted";
+		planningService.delete(id);
+		String message = "Planning " + id + " was successfully deleted";
 		attributes.addFlashAttribute("message", message);		
-		return "redirect:/eleves";
+		return "redirect:/planning";
 	}
 	
-	@PostMapping("/eleves/save")
-	public String saveEleve(@Valid @ModelAttribute Eleve eleve , BindingResult result, RedirectAttributes attributes){			
+	@PostMapping("/planning/save")
+	public String savePlanning(@Valid @ModelAttribute Planning planning , BindingResult result, RedirectAttributes attributes){			
 		
-		LOGGER.info("IN: Eleves/save-POST");
+		LOGGER.info("IN: Planning/save-POST");
 		//Validation erros	
 		if (result.hasErrors()) {
-			LOGGER.info("Eleves/save-POST error: " + result.toString());
-			attributes.addFlashAttribute("org.springframework.validation.BindingResult.eleve", result);
-			attributes.addFlashAttribute("eleve", eleve);
-			return "eleves/editEleve";
+			LOGGER.info("Planning/save-POST error: " + result.toString());
+			attributes.addFlashAttribute("org.springframework.validation.BindingResult.planning", result);
+			attributes.addFlashAttribute("planning", planning);
+			return "planning/editPlanning";
 
 		}else{
 
 			try {
-				eleveService.addOrUpdate(eleve);
+				planningService.addOrUpdate(planning);
 				//Business errors	
 			} catch (final BusinessException e) {
 				ErrorsHelper.rejectErrors(result, e.getErrors());
-				LOGGER.info("Eleves/save-POST error: " + result.toString());
-				attributes.addFlashAttribute("org.springframework.validation.BindingResult.eleve", result);
-				attributes.addFlashAttribute("eleve", eleve);
-				return "eleves/editEleve";
+				LOGGER.info("Planning/save-POST error: " + result.toString());
+				attributes.addFlashAttribute("org.springframework.validation.BindingResult.planning", result);
+				attributes.addFlashAttribute("planning", planning);
+				return "planning/editPlanning";
 			}
 
-			String message = "Eleve " + eleve.getId() + " was successfully added";
+			String message = "Planning " + planning.getId() + " was successfully added";
 			attributes.addFlashAttribute("message", message);
-			return "redirect:/eleves";
+			return "redirect:/planning";
 		}
 
 	}
 	@ModelAttribute("currentMenu")
 	public String module(){
-		return "eleves";
+		return "planning";
 	}
 	
 

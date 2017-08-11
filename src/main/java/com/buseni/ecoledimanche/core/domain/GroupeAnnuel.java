@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.buseni.ecoledimanche.account.domain.UserAccount;
 
@@ -24,11 +27,13 @@ public class GroupeAnnuel extends BaseEntityAudit implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty
 	@Column(name="annee_scolaire")
 	private String anneeScolaire;
 	
 	private String description;
 	
+	@NotNull
 	@OneToOne
 	@JoinColumn(name="groupe_id")
 	private Groupe groupe;
