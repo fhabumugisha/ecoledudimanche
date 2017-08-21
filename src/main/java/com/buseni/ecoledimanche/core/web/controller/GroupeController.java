@@ -57,7 +57,9 @@ private GroupeService groupeService;
 	public String newGroupe(Model model){	
 
 		LOGGER.info("IN: Groupes/new-GET");
-		model.addAttribute("groupe", new Groupe());
+		Groupe groupe = new Groupe();
+		groupe.setEnabled(true);
+		model.addAttribute("groupe", groupe);
 		return "groupes/editGroupe";
 	}
 

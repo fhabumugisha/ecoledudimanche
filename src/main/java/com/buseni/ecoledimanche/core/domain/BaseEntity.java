@@ -39,6 +39,9 @@ public abstract class BaseEntity implements Serializable {
 	public Boolean isEnabled() {
 		return enabled;
 	}
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;

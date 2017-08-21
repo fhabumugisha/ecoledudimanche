@@ -5,15 +5,18 @@ import java.io.Serializable;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "groupe")
 @AttributeOverride(name = "id", column = @Column(name = "groupe_id",   nullable = false))
+
 public class Groupe  extends BaseEntityAudit implements Serializable{
 	/**
 	 * 

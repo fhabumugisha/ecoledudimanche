@@ -133,7 +133,7 @@
 								
 								<div class="form-group" th:classappend="${#fields.hasErrors('name')}? has-error">
 									
-									<label for="name" th:text="#{groupe.field.name.}">Titre</label>
+									<label for="name" th:text="#{groupe.field.name}">Name</label>
 									
 									 <input
 										type="text" class="form-control" id="name" th:field="*{name}"  required="required"  placeholder="Entrez  le nom du groupe"/>
@@ -155,12 +155,13 @@
 								</div>
 
 							
-								<a href="#" th:href="@{groupes}" role="button" class="btn  btn-secondary">  			
+								<a href="#" th:href="@{/groupes}" role="button" class="btn  btn-secondary">  			
   									
          								<span th:text="#{cancel.button.label}">Cancel</span>
        								
 									</a>
-								<input  type="submit" th:text="${groupe.id} ? #{update.button.label} : #{add.button.label}"  class="btn btn-primary"/>
+									<button type="submit" class="btn btn-primary"><span th:text="${groupe.id} ? #{update.button.label} : #{add.button.label}" ></span> </button>
+								
 							</form>
 						</div>
 					</div>

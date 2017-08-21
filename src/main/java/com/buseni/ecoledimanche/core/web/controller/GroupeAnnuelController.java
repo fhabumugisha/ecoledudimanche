@@ -36,8 +36,8 @@ public class GroupeAnnuelController {
 	
 	@Autowired
 	private GroupeAnnuelService groupeAnnuelService;
-	@GetMapping("/groupes")
-	public String groupes(Model model, Pageable page){		
+	@GetMapping("/groupes-annuel")
+	public String groupesAnnuel(Model model, Pageable page){		
 		
 		LOGGER.info("IN: GroupesAnnuel/list-GET");
 
@@ -61,7 +61,7 @@ public class GroupeAnnuelController {
 	}
 
 	
-	@GetMapping("/groupes/edit")
+	@GetMapping("/groupes-annuel/edit")
 	public String editGroupeAnnuel(@RequestParam(value="id", required=true) Integer id, Model model, HttpServletRequest request){	
 		LOGGER.info("IN: GroupesAnnuel/edit-GET");
 		if (isRememberMeAuthenticated()) {
@@ -76,7 +76,7 @@ public class GroupeAnnuelController {
 	}
 
 	
-	@GetMapping("/groupes/delete")
+	@GetMapping("/groupes-annuel/delete")
 	public String deleteGroupeAnnuel(@RequestParam(value="id", required=true) Integer id, RedirectAttributes attributes){		
 		LOGGER.info("IN: GroupesAnnuel/delete-GET");
 		groupeAnnuelService.delete(id);
@@ -86,7 +86,7 @@ public class GroupeAnnuelController {
 	}
 
 	
-	@PostMapping("/groupes/save")
+	@PostMapping("/groupes-annuel/save")
 	public String saveGroupeAnnuel(@Valid @ModelAttribute GroupeAnnuel groupeAnnuel , BindingResult result, RedirectAttributes attributes){		
 		LOGGER.info("IN: GroupesAnnuel/save-POST");
 		//Validation erros	
@@ -117,7 +117,7 @@ public class GroupeAnnuelController {
 
 	@ModelAttribute("currentMenu")
 	public String module(){
-		return "groupes";
+		return "groupesAnnuel";
 	}
 	
 

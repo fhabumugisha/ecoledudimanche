@@ -13,7 +13,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-	crossorigin="anonymous">
+	crossorigin="anonymous"/>
 
 <!-- Custom styles for this template -->
 <link href="dashboard.css" rel="stylesheet"
@@ -28,6 +28,13 @@
 <link
 	href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap4.min.css"
 	rel="stylesheet" />
+	
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+	
+	
+	<link href="https://cdn.datatables.net/buttons/1.4.0/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+	
 </head>
 
 <body>
@@ -43,7 +50,7 @@
 		<a class="navbar-brand" href="#">Gestion club biblique</a>
 
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<ul class="navbar-nav mr-auto">
+			<ul class="navbar-nav mr-auto">https://cdn.datatables.net/buttons/1.4.0/css/buttons.bootstrap4.min.css
 				<li class="nav-item active"><a class="nav-link" href="#"
 					th:href="@{/}">Accueil <span class="sr-only">(current)</span>
 				</a></li>
@@ -106,27 +113,43 @@
 
 			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
 			
+		
 			<div th:if="${message}" class="alert alert-success" th:text="${message}">Cool</div>
-			<h4 class="sub-header" th:text="#{groupes.list.title}">Listing groupes</h4>
-					<div class="well well-sm">
 			
-				<a href="/editGroupe" th:href="@{/groupes/new}">  			
+		
+		
+		
+			<h4 class="sub-header" th:text="#{groupes.title}">Listing groupes</h4>
+			
+			<div class="card">
+  				<div class="card-body">
+    				<a href="/editGroupe" th:href="@{/groupes/new}">  			
   				<button type="button" class="btn  btn-primary btn-xs">
          			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	
-         			<span th:text="#{list.add}">Add</span>
+         			<span th:text="#{groupe.add}">Add</span>
        			</button>
 				</a> 
+  					</div>
 			</div>
 			
+<!-- 			<div class="well well-sm"> -->
 			
+<!-- 				<a href="/editGroupe" th:href="@{/groupes/new}">  			 -->
+<!--   				<button type="button" class="btn  btn-primary btn-xs"> -->
+<!--          			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	 -->
+<!--          			<span th:text="#{groupe.add}">Add</span> -->
+<!--        			</button> -->
+<!-- 				</a>  -->
+<!-- 			</div> -->
+			
+		
 			
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">La liste des séances</div>
-						<!-- /.panel-heading -->
-						<div class="panel-body">
-							<table width="100%"
+				
+						
+						
+							<table 
 								class="table table-striped table-bordered table-hover"
 								id="dataTables-example">
 								<thead>
@@ -150,20 +173,19 @@
 											<a href="#"
 													th:href="@{/groupes/edit(id=${groupe.id})}">
 
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-pencil"></span>&nbsp; <span
-																th:text="#{list.edit}">edit</span>
-														</button>
+
+															<i class="fa fa-pencil-square-o" ></i>
+															
+
 
 												</a>
 												 <a href="#"
 													th:href="@{/groupes/delete(id=${groupe.id})}"
 													class="deleteGroupe">
 
-														<button type="button" class="btn btn-default btn-xs">
-															<span class="glyphicon glyphicon-trash"></span>&nbsp; <span
-																th:text="#{list.delete}">delete</span>
-														</button>
+														<i class="fa fa-trash-o fa-fw"></i>
+														
+
 
 
 												</a>
@@ -196,10 +218,9 @@
 								</tbody>
 							</table>
 							
-						</div>
-						<!-- /.panel-body -->
-					</div>
-					<!-- /.panel -->
+						
+					
+					
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -214,6 +235,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
 		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
 		crossorigin="anonymous"></script>
+		
 	<!-- 	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
@@ -231,12 +253,37 @@
 		src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+		
+	
+	<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/dataTables.buttons.min.js"></script>
+		
+		<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.bootstrap4.min.js"></script>
+		
+	<script type="text/javascript"   src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script
+		src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+		
+		<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+
+<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.html5.min.js"></script>
+<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.print.min.js"></script>
 
 	<script>
     $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
+    	var table = $('#dataTables-example').DataTable( {
+    		dom: 'Bfrtip',
+    		lengthChange: false,
+            responsive: true,
+            buttons: [ 'csvHtml5', 'pdf', 'print' ]
+        } );
+    	table.buttons().container().appendTo( '#dataTables-example_wrapper .col-md-6:eq(0)' );
+    	
+       
     });
     </script>
 </body>
