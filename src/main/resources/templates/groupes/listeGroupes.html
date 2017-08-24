@@ -50,7 +50,7 @@
 		<a class="navbar-brand" href="#">Gestion club biblique</a>
 
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<ul class="navbar-nav mr-auto">https://cdn.datatables.net/buttons/1.4.0/css/buttons.bootstrap4.min.css
+			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="#"
 					th:href="@{/}">Accueil <span class="sr-only">(current)</span>
 				</a></li>
@@ -119,18 +119,9 @@
 		
 		
 		
-			<h4 class="sub-header" th:text="#{groupes.title}">Listing groupes</h4>
+			<h4  th:text="#{groupes.title}">Listing groupes</h4>
 			
-			<div class="card">
-  				<div class="card-body">
-    				<a href="/editGroupe" th:href="@{/groupes/new}">  			
-  				<button type="button" class="btn  btn-primary btn-xs">
-         			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	
-         			<span th:text="#{groupe.add}">Add</span>
-       			</button>
-				</a> 
-  					</div>
-			</div>
+			
 			
 <!-- 			<div class="well well-sm"> -->
 			
@@ -144,8 +135,8 @@
 			
 		
 			
-			<div class="row">
-				<div class="col-lg-12">
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-lg-12"> -->
 				
 						
 						
@@ -221,9 +212,9 @@
 						
 					
 					
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
+<!-- 				</div> -->
+<!-- 				/.col-lg-12 -->
+<!-- 			</div> -->
 
 			</main>
 		</div>
@@ -254,7 +245,8 @@
 	<script
 		src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
 		
-	
+	<script
+		src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap4.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/buttons/1.4.0/js/dataTables.buttons.min.js"></script>
 		
@@ -273,18 +265,45 @@
 <script
 		src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.print.min.js"></script>
 
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var context = /*[[@{/}]]*/ 'localhost:8080';
+	/*]]>*/
+	
+	</script>
+	
 	<script>
+	
     $(document).ready(function() {
+    	
     	var table = $('#dataTables-example').DataTable( {
     		dom: 'Bfrtip',
     		lengthChange: false,
             responsive: true,
-            buttons: [ 'csvHtml5', 'pdf', 'print' ]
+            buttons: [ 'csvHtml5', 'pdf', 'print' , 
+            		{
+            		text :'Nouveau',
+            		init : function ( dt, node , config){
+            			this.node().removeClass("btn-secondary").addClass("btn-primary");
+            			this.node().prop("href", "/groupes/new");
+
+            			},
+            		
+            		action: function (e , dt, node , config){
+            			location.href = this.node().prop("href");
+            			}
+            		}
+            	]
         } );
-    	table.buttons().container().appendTo( '#dataTables-example_wrapper .col-md-6:eq(0)' );
+    	$('#dataTables-example_wrapper').wrapInner("<div class='row'></div>");
+    	table.buttons().container().wrap("<div class='col-md-6'></div>");
+    	$("#dataTables-example_filter").wrap("<div class='col-md-6'></div>");
+//     	table.buttons().container().appendTo( '#dataTables-example_wrapper .col-md-6:eq(0)' );
     	
        
     });
+    
+   
     </script>
 </body>
 </html>
