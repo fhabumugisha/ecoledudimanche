@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,8 +91,8 @@ public class ThemeLeconServiceImpl implements ThemeLeconService {
 		if(pageable == null){
 			return new PageImpl<>(themeLeconRepo.findAll());
 		}
-		PageRequest pr =  PageRequest.of(pageable.getPageNumber()-1, pageable.getPageSize());
-		return themeLeconRepo.findAll(pr);
+//		PageRequest pr =  PageRequest.of(pageable.getPageNumber()-1, pageable.getPageSize());
+		return themeLeconRepo.findAll(pageable);
 	}
 
 	/* (non-Javadoc)

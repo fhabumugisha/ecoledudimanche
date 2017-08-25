@@ -93,8 +93,8 @@ public class LeconServiceImpl implements LeconService {
 		if(pageable == null){
 			return new PageImpl<>(leconRepo.findAll());
 		}
-		PageRequest pr =  PageRequest.of(pageable.getPageNumber()-1, pageable.getPageSize());
-		return leconRepo.findAll(pr);
+//		PageRequest pr =  PageRequest.of(pageable.getPageNumber()-1, pageable.getPageSize());
+		return leconRepo.findAll(pageable);
 	}
 
 	/* (non-Javadoc)

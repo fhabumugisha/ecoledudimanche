@@ -38,14 +38,14 @@ public class GroupeAnnuel extends BaseEntityAudit implements Serializable{
 	@JoinColumn(name="groupe_id")
 	private Groupe groupe;
 	
-	@OneToMany(mappedBy="groupeAnnuel")
-	private Set<Eleve> eleves = new HashSet<>();
-	
-	@OneToMany(mappedBy="groupeAnnuel")
-	private Set<UserAccount> moniteurs =  new HashSet<>();
-	
-	@OneToMany(mappedBy="groupeAnnuel")
-	private Set<Lecon> lecons = new HashSet<>();
+//	@OneToMany(mappedBy="groupeAnnuel")
+//	private Set<Eleve> eleves = new HashSet<>();
+//	
+//	@OneToMany(mappedBy="groupeAnnuel")
+//	private Set<UserAccount> moniteurs =  new HashSet<>();
+//	
+//	@OneToMany(mappedBy="groupeAnnuel")
+//	private Set<Lecon> lecons = new HashSet<>();
 
 	public String getAnneeScolaire() {
 		return anneeScolaire;
@@ -71,21 +71,21 @@ public class GroupeAnnuel extends BaseEntityAudit implements Serializable{
 		this.groupe = groupe;
 	}
 
-	public Set<Eleve> getEleves() {
-		return eleves;
-	}
-
-	public void setEleves(Set<Eleve> eleves) {
-		this.eleves = eleves;
-	}
-
-	public Set<UserAccount> getMoniteurs() {
-		return moniteurs;
-	}
-
-	public void setMoniteurs(Set<UserAccount> moniteurs) {
-		this.moniteurs = moniteurs;
-	}
+//	public Set<Eleve> getEleves() {
+//		return eleves;
+//	}
+//
+//	public void setEleves(Set<Eleve> eleves) {
+//		this.eleves = eleves;
+//	}
+//
+//	public Set<UserAccount> getMoniteurs() {
+//		return moniteurs;
+//	}
+//
+//	public void setMoniteurs(Set<UserAccount> moniteurs) {
+//		this.moniteurs = moniteurs;
+//	}
 
 	@Override
 	public String toString() {

@@ -114,7 +114,12 @@
 			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
 			
 		
-			<div th:if="${message}" class="alert alert-success" th:text="${message}">Cool</div>
+			<div th:if="${message}" class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+   					 <span aria-hidden="true">&times;</span>
+ 				 </button>
+				<span th:text="${message}">Cool</span>
+			</div>
 			
 		
 		
@@ -295,9 +300,10 @@
             		}
             	]
         } );
-    	$('#dataTables-example_wrapper').wrapInner("<div class='row'></div>");
-    	table.buttons().container().wrap("<div class='col-md-6'></div>");
-    	$("#dataTables-example_filter").wrap("<div class='col-md-6'></div>");
+//     	$("<div class='row'></div>").prependTo('#dataTables-example_wrapper');
+    	table.buttons().container().wrap("<div class='col-md-6 dt-ctrls'></div>");
+    	$("#dataTables-example_filter").wrap("<div class='col-md-6 dt-ctrls'></div>");
+    	$(".dt-ctrls").wrapAll("<div class='row'></div>");
 //     	table.buttons().container().appendTo( '#dataTables-example_wrapper .col-md-6:eq(0)' );
     	
        

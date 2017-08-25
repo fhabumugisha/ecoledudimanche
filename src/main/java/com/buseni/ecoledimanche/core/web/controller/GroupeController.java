@@ -1,5 +1,8 @@
 package com.buseni.ecoledimanche.core.web.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -123,7 +126,11 @@ private GroupeService groupeService;
 		return "groupes";
 	}
 	
-
+	@ModelAttribute("listeAnneeScolaire")
+	public List<String> listeAnneeScolaire(){
+		return Arrays.asList("2017-2018");
+	}
+	
 	/**
 	 * save targetURL in session
 	 */

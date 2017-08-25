@@ -19,6 +19,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.buseni.ecoledimanche.core.domain.BaseEntityAudit;
+import com.buseni.ecoledimanche.core.domain.Groupe;
 import com.buseni.ecoledimanche.core.domain.GroupeAnnuel;
 
 @Entity
@@ -67,8 +68,8 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 	private List<Role> roles = new ArrayList<>();
 
 	@ManyToOne
-	@JoinColumn(name="groupe_annuel_id")
-	private GroupeAnnuel groupeAnnuel;
+	@JoinColumn(name="groupe_id")
+	private Groupe groupe;
 	
 	
 	public UserAccount() {
@@ -117,7 +118,7 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 		return "UserAccount [email=" + email + ", password=" + password + ", estCoequipier=" + estCoequipier
 				+ ", tokenExpired=" + tokenExpired + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", phoneNumber=" + phoneNumber + ", birthDate=" + birthDate + ", roles=" + roles + ", groupeAnnuel="
-				+ groupeAnnuel + "]";
+				+ groupe + "]";
 	}
 
 	@Override
@@ -128,7 +129,7 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (estCoequipier ? 1231 : 1237);
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((groupeAnnuel == null) ? 0 : groupeAnnuel.hashCode());
+		result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
@@ -163,10 +164,10 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (groupeAnnuel == null) {
-			if (other.groupeAnnuel != null)
+		if (groupe == null) {
+			if (other.groupe != null)
 				return false;
-		} else if (!groupeAnnuel.equals(other.groupeAnnuel))
+		} else if (!groupe.equals(other.groupe))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
@@ -231,13 +232,23 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 		this.estCoequipier = estCoequipier;
 	}
 
-	public GroupeAnnuel getGroupeAnnuel() {
-		return groupeAnnuel;
+	public Groupe getGroupe() {
+		return groupe;
 	}
 
-	public void setGroupeAnnuel(GroupeAnnuel groupeAnnuel) {
-		this.groupeAnnuel = groupeAnnuel;
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
 	}
+
+	public Boolean getEstCoequipier() {
+		return estCoequipier;
+	}
+
+	public Boolean getTokenExpired() {
+		return tokenExpired;
+	}
+
+	
 	
 
 

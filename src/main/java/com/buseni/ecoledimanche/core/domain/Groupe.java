@@ -1,17 +1,22 @@
 package com.buseni.ecoledimanche.core.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.buseni.ecoledimanche.account.domain.UserAccount;
 
 @Entity
 @Table(name = "groupe")
@@ -30,6 +35,20 @@ public class Groupe  extends BaseEntityAudit implements Serializable{
 	@Lob
 	@Column(length=500)
 	private String description;
+	
+	@NotEmpty
+	@Column(name="annee_scolaire")
+	private String anneeScolaire;
+	
+	@OneToMany(mappedBy="groupe")
+	private Set<Eleve> eleves = new HashSet<>();
+	
+	@OneToMany(mappedBy="groupe")
+	private Set<UserAccount> moniteurs =  new HashSet<>();
+	
+	@OneToMany(mappedBy="groupe")
+	private Set<Lecon> lecons = new HashSet<>();
+
 	
 	
 	public String getName() {
@@ -76,6 +95,30 @@ public class Groupe  extends BaseEntityAudit implements Serializable{
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+	public String getAnneeScolaire() {
+		return anneeScolaire;
+	}
+	public void setAnneeScolaire(String anneeScolaire) {
+		this.anneeScolaire = anneeScolaire;
+	}
+	public Set<Eleve> getEleves() {
+		return eleves;
+	}
+	public void setEleves(Set<Eleve> eleves) {
+		this.eleves = eleves;
+	}
+	public Set<UserAccount> getMoniteurs() {
+		return moniteurs;
+	}
+	public void setMoniteurs(Set<UserAccount> moniteurs) {
+		this.moniteurs = moniteurs;
+	}
+	public Set<Lecon> getLecons() {
+		return lecons;
+	}
+	public void setLecons(Set<Lecon> lecons) {
+		this.lecons = lecons;
 	}
 	
 

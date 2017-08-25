@@ -30,8 +30,8 @@ public class Eleve extends BaseEntityAudit implements Serializable{
 	private String contact;
 		
 	@ManyToOne
-	@JoinColumn(name="groupe_annuel_id")
-	private GroupeAnnuel groupeAnnuel;
+	@JoinColumn(name="groupe_id")
+	private Groupe groupe;
 	
 	public String getNom() {
 		return nom;
@@ -66,7 +66,7 @@ public class Eleve extends BaseEntityAudit implements Serializable{
 	@Override
 	public String toString() {
 		return "Eleve [nom=" + nom + ", prenom=" + prenom + ", age=" + age + ", classe=" + classe + ", contact="
-				+ contact + ", groupeAnnuel=" + groupeAnnuel + "]";
+				+ contact + ", groupeAnnuel=" + groupe + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -75,7 +75,7 @@ public class Eleve extends BaseEntityAudit implements Serializable{
 		result = prime * result + ((age == null) ? 0 : age.hashCode());
 		result = prime * result + ((classe == null) ? 0 : classe.hashCode());
 		result = prime * result + ((contact == null) ? 0 : contact.hashCode());
-		result = prime * result + ((groupeAnnuel == null) ? 0 : groupeAnnuel.hashCode());
+		result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
 		return result;
@@ -104,10 +104,10 @@ public class Eleve extends BaseEntityAudit implements Serializable{
 				return false;
 		} else if (!contact.equals(other.contact))
 			return false;
-		if (groupeAnnuel == null) {
-			if (other.groupeAnnuel != null)
+		if (groupe == null) {
+			if (other.groupe != null)
 				return false;
-		} else if (!groupeAnnuel.equals(other.groupeAnnuel))
+		} else if (!groupe.equals(other.groupe))
 			return false;
 		if (nom == null) {
 			if (other.nom != null)
@@ -121,12 +121,13 @@ public class Eleve extends BaseEntityAudit implements Serializable{
 			return false;
 		return true;
 	}
-	public GroupeAnnuel getGroupeAnnuel() {
-		return groupeAnnuel;
+	public Groupe getGroupe() {
+		return groupe;
 	}
-	public void setGroupeAnnuel(GroupeAnnuel groupeAnnuel) {
-		this.groupeAnnuel = groupeAnnuel;
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
 	}
+	
 	
 	
 	

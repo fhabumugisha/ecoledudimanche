@@ -46,7 +46,7 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 	
 	@Lob
 	@Column(length=500)
-	private String commentaires;
+	private String commentaire;
 	
 	@NotNull
 	@ManyToOne
@@ -62,8 +62,8 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 	private Set<UserAccount> moniteurs = new HashSet<>();
 	
 	@ManyToOne
-	@JoinColumn(name="groupe_annuel_id")
-	private GroupeAnnuel groupeAnnuel;
+	@JoinColumn(name="groupe_id")
+	private Groupe groupe;
 	
 	
 	public Date getDate() {
@@ -84,11 +84,11 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getCommentaires() {
-		return commentaires;
+	public String getCommentaire() {
+		return commentaire;
 	}
-	public void setCommentaires(String commentaires) {
-		this.commentaires = commentaires;
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
 	}
 	public Set<Eleve> getEleves() {
 		return eleves;
@@ -105,16 +105,16 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 	@Override
 	public String toString() {
 		return "Lecon [date=" + date + ", titre=" + titre + ", description=" + description + ", commentaires="
-				+ commentaires + ", themeLecon=" + themeLecon + ", groupeAnnuel=" + groupeAnnuel + "]";
+				+ commentaire + ", themeLecon=" + themeLecon + ", groupe=" + groupe + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((commentaires == null) ? 0 : commentaires.hashCode());
+		result = prime * result + ((commentaire == null) ? 0 : commentaire.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((groupeAnnuel == null) ? 0 : groupeAnnuel.hashCode());
+		result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
 		result = prime * result + ((themeLecon == null) ? 0 : themeLecon.hashCode());
 		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
 		return result;
@@ -128,10 +128,10 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Lecon other = (Lecon) obj;
-		if (commentaires == null) {
-			if (other.commentaires != null)
+		if (commentaire == null) {
+			if (other.commentaire != null)
 				return false;
-		} else if (!commentaires.equals(other.commentaires))
+		} else if (!commentaire.equals(other.commentaire))
 			return false;
 		if (date == null) {
 			if (other.date != null)
@@ -143,10 +143,10 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (groupeAnnuel == null) {
-			if (other.groupeAnnuel != null)
+		if (groupe == null) {
+			if (other.groupe != null)
 				return false;
-		} else if (!groupeAnnuel.equals(other.groupeAnnuel))
+		} else if (!groupe.equals(other.groupe))
 			return false;
 		if (themeLecon == null) {
 			if (other.themeLecon != null)
@@ -166,11 +166,6 @@ public class Lecon extends BaseEntityAudit implements Serializable{
 	public void setThemeLecon(ThemeLecon themeLecon) {
 		this.themeLecon = themeLecon;
 	}
-	public GroupeAnnuel getGroupeAnnuel() {
-		return groupeAnnuel;
-	}
-	public void setGroupeAnnuel(GroupeAnnuel groupeAnnuel) {
-		this.groupeAnnuel = groupeAnnuel;
-	}
+	
 	
 }

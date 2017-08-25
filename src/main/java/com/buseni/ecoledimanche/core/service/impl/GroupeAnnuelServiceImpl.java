@@ -43,28 +43,29 @@ public class GroupeAnnuelServiceImpl implements GroupeAnnuelService {
 	@Transactional
 	public GroupeAnnuel addOrUpdate(GroupeAnnuel groupeAnnuel) throws BusinessException {
 		//business control 
-		if(groupeAnnuel == null){
-			throw new NullPointerException();
-		}
-		BusinessException be = new BusinessException();
-		if(StringUtils.isEmpty(groupeAnnuel.getAnneeScolaire())){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.annee.null");			
-			CustomError  ce = ceb.field("anneeScolaire").buid();
-			be.addError(ce);
-		
-		}
-		if(groupeAnnuel.getGroupe() == null || groupeAnnuel.getGroupe().getId() == null){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.groupe.null");			
-			CustomError  ce = ceb.field("groupe").buid();
-			be.addError(ce);
-		
-		}
-		
-		if(CollectionUtils.isEmpty(be.getErrors())){					
-			return groupeAnnuelRepo.save(groupeAnnuel);
-		}else{
-			throw be;
-		}
+//		if(groupeAnnuel == null){
+//			throw new NullPointerException();
+//		}
+//		BusinessException be = new BusinessException();
+//		if(StringUtils.isEmpty(groupeAnnuel.getAnneeScolaire())){
+//			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.annee.null");			
+//			CustomError  ce = ceb.field("anneeScolaire").buid();
+//			be.addError(ce);
+//		
+//		}
+//		if(groupeAnnuel.getGroupe() == null || groupeAnnuel.getGroupe().getId() == null){
+//			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.groupe.null");			
+//			CustomError  ce = ceb.field("groupe").buid();
+//			be.addError(ce);
+//		
+//		}
+//		
+//		if(CollectionUtils.isEmpty(be.getErrors())){					
+//			return groupeAnnuelRepo.save(groupeAnnuel);
+//		}else{
+//			throw be;
+//		}
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -74,30 +75,30 @@ public class GroupeAnnuelServiceImpl implements GroupeAnnuelService {
 	@Transactional
 	public GroupeAnnuel update(GroupeAnnuel groupeAnnuel) throws BusinessException {
 		//business control 
-				if(groupeAnnuel == null){
-					throw new NullPointerException();
-				}
-				BusinessException be = new BusinessException();
-				if(StringUtils.isEmpty(groupeAnnuel.getAnneeScolaire())){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.annee.null");			
-					CustomError  ce = ceb.field("anneeScolaire").buid();
-					be.addError(ce);
+//				if(groupeAnnuel == null){
+//					throw new NullPointerException();
+//				}
+//				BusinessException be = new BusinessException();
+//				if(StringUtils.isEmpty(groupeAnnuel.getAnneeScolaire())){
+//					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.annee.null");			
+//					CustomError  ce = ceb.field("anneeScolaire").buid();
+//					be.addError(ce);
+//				
+//				}
+//				if(groupeAnnuel.getGroupe() == null || groupeAnnuel.getGroupe().getId() == null){
+//					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.groupe.null");			
+//					CustomError  ce = ceb.field("groupe").buid();
+//					be.addError(ce);
+//				
+//				}
+//				
+//				if(CollectionUtils.isEmpty(be.getErrors())){					
+//					return groupeAnnuelRepo.save(groupeAnnuel);
+//				}else{
+//					throw be;
+//				}
 				
-				}
-				if(groupeAnnuel.getGroupe() == null || groupeAnnuel.getGroupe().getId() == null){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupeannuel.groupe.null");			
-					CustomError  ce = ceb.field("groupe").buid();
-					be.addError(ce);
-				
-				}
-				
-				if(CollectionUtils.isEmpty(be.getErrors())){					
-					return groupeAnnuelRepo.save(groupeAnnuel);
-				}else{
-					throw be;
-				}
-				
-		
+		return null;
 	}
 
 	/* (non-Javadoc)

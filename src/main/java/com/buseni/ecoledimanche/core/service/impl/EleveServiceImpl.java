@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +64,7 @@ public class EleveServiceImpl implements EleveService {
 					be.addError(ce);
 				
 				}
-				if(eleve.getGroupeAnnuel() == null || eleve.getGroupeAnnuel().getId() == null){
+				if(eleve.getGroupe() == null || eleve.getGroupe().getId() == null){
 					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.groupe.null");			
 					CustomError  ce = ceb.field("groupe").buid();
 					be.addError(ce);
@@ -108,7 +107,7 @@ public class EleveServiceImpl implements EleveService {
 			be.addError(ce);
 		
 		}
-		if(eleve.getGroupeAnnuel() == null || eleve.getGroupeAnnuel().getId() == null){
+		if(eleve.getGroupe() == null || eleve.getGroupe().getId() == null){
 			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.groupe.null");			
 			CustomError  ce = ceb.field("groupe").buid();
 			be.addError(ce);
@@ -144,8 +143,8 @@ public class EleveServiceImpl implements EleveService {
 		if(pageable == null){
 			return new PageImpl<>(eleveRepo.findAll());
 		}
-		PageRequest pr =  PageRequest.of(pageable.getPageNumber()-1, pageable.getPageSize());
-		return eleveRepo.findAll(pr);
+//		PageRequest pr =  PageRequest.of(pageable.getPageNumber()-1, pageable.getPageSize());
+		return eleveRepo.findAll(pageable);
 	}
 
 	/* (non-Javadoc)
