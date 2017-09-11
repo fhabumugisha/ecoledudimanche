@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title  th:text="#{groupes.title}">Gestion Club biblique - Espace Mono</title>
+<title  th:text="#{moniteurs.title}">Gestion Club biblique - Espace Mono</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -124,16 +124,16 @@
 		
 		
 		
-			<h4  th:text="#{groupes.title}">Listing groupes</h4>
+			<h4  th:text="#{moniteurs.title}">Listing moniteurs</h4>
 			
 			
 			
 <!-- 			<div class="well well-sm"> -->
 			
-<!-- 				<a href="/editGroupe" th:href="@{/groupes/new}">  			 -->
+<!-- 				<a href="/editGroupe" th:href="@{/moniteurs/new}">  			 -->
 <!--   				<button type="button" class="btn  btn-primary btn-xs"> -->
 <!--          			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	 -->
-<!--          			<span th:text="#{groupe.add}">Add</span> -->
+<!--          			<span th:text="#{moniteur.add}">Add</span> -->
 <!--        			</button> -->
 <!-- 				</a>  -->
 <!-- 			</div> -->
@@ -151,25 +151,35 @@
 								<thead>
 									<tr>
 										<th >#</th>
-										<th th:text="#{groupe.field.name}">Name</th>
-										<th th:text="#{groupe.field.description}">Description</th>
-										<th th:text="#{groupe.field.anneeScolaire}">Description</th>
-										<th th:text="#{groupe.field.enabled}">Actif</th>
+										<th th:text="#{moniteurs.field.lastName}">Nom</th>
+										<th th:text="#{moniteurs.field.firstName}">Prénom</th>
+										<th th:text="#{moniteurs.field.email}">Email</th>
+										<th th:text="#{moniteurs.field.phoneNumber}">Numéro tél</th>
+										<th th:text="#{moniteurs.field.birthDate}">Date naissance</th>
+										<th th:text="#{moniteurs.field.groupe}">Groupe</th>
+										<th th:text="#{moniteurs.field.estCoequipier}">Oui</th>
+										<th th:text="#{moniteurs.field.estReferent}">Oui</th>
+										<th th:text="#{moniteurs.field.enabled}">Actif</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
 
-									<tr th:each="groupe : ${groupes}"
-										th:classappend="${groupeStat.odd}? 'odd'">
-										<td th:text="${groupe.id}">1</td>
-										<td th:text="${groupe.name}">Fourmiz</td>
-										<td th:text="${groupe.description}">6ans à 7 ans</td>
-										<td th:text="${groupe.anneeScolaire}">2017-2018</td>
-										<td th:text="${groupe.enabled}">Oui</td>
+									<tr th:each="moniteur : ${moniteurs}"
+										th:classappend="${moniteurStat.odd}? 'odd'">
+										<td th:text="${moniteur.id}">1</td>
+										<td th:text="${moniteur.firstName}">Fab</td>
+										<td th:text="${moniteur.lastName}">Bobo</td>
+										<td th:text="${moniteur.email}">Bobo@ecoledudimanche.com</td>
+										<td th:text="${moniteur.phoneNumber}">077777777</td>
+										<td th:text="${moniteur.birthDate}">2017-12-12</td>
+										<td ><span th:if="${moniteur.groupe}" th:text="${moniteur.groupe.name}"></span> </td>
+										<td th:text="${moniteur.estCoequipier}">Oui</td>
+										<td th:text="${moniteur.estReferent}">Oui</td>
+										<td th:text="${moniteur.enabled}">Oui</td>
 										<td>
 											<a href="#"
-													th:href="@{/groupes/edit(id=${groupe.id})}">
+													th:href="@{/moniteurs/edit(id=${moniteur.id})}">
 
 
 															<i class="fa fa-pencil-square-o" ></i>
@@ -178,8 +188,8 @@
 
 												</a>
 												 <a href="#"
-													th:href="@{/groupes/delete(id=${groupe.id})}"
-													class="deleteGroupe">
+													th:href="@{/moniteurs/delete(id=${moniteur.id})}"
+													class="deleteMoniteur">
 
 														<i class="fa fa-trash-o fa-fw"></i>
 														
@@ -292,7 +302,7 @@
             		text :'Nouveau',
             		init : function ( dt, node , config){
             			this.node().removeClass("btn-secondary").addClass("btn-primary");
-            			this.node().prop("href", "/groupes/new");
+            			this.node().prop("href", "/moniteurs/new");
 
             			},
             		
@@ -303,7 +313,7 @@
             	],
             	"columnDefs": [
             	    { "orderable": false, "targets":0 },
-            	    { "orderable": false, "targets":5 }
+            	    { "orderable": false, "targets":10 }
             	  ]
         } );
 //     	$("<div class='row'></div>").prependTo('#dataTables-example_wrapper');

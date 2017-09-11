@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title th:text="${groupe.id} ? #{groupe.edit.title} : #{groupe.create.title}">Edit groupe</title>
+<title th:text="${moniteur.id} ? #{moniteurs.edit.title} : #{moniteurs.create.title}">Edit moniteur</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -118,60 +118,140 @@
 					
 				
 						<div class="card">
-						<div class="card-header"><span th:text="${groupe.id} ? #{groupe.edit.title} : #{groupe.create.title}">Editer un groupe</span> </div>
+						<div class="card-header"><span th:text="${moniteur.id} ? #{moniteurs.edit.title} : #{moniteurs.create.title}">Editer un moniteur</span> </div>
 						<div class="card-block">
-							<form role="form" action="#" th:action="@{/groupes/save}" th:object="${groupe}" method="post">
+							<form role="form" action="#" th:action="@{/moniteurs/save}" th:object="${moniteur}" method="post">
 
-								<div th:if="${#fields.hasGlobalErrors()}"
+								<div th:if="${#fields.hasErrors('*')}"
 									class="alert alert-danger">
 									<ul>
-										<li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Input
+										<li th:each="err : ${#fields.allErrors()}" th:text="${err}">Input
 											is incorrect</li>
 									</ul>
 								</div>
 								<input type="text" hidden="hidden" th:field="*{id}" class="hidden" />
 								
-								<div class="form-group" th:classappend="${#fields.hasErrors('name')}? has-error">
+								<div class="row">
+											<div class="form-group col" th:classappend="${#fields.hasErrors('firstName')}? has-error">
 									
-									<label for="name" th:text="#{groupe.field.name}">Name</label>
+									<label for="firstName" th:text="#{moniteurs.field.firstName}">First name</label>
 									
 									 <input
-										type="text" class="form-control" id="name" th:field="*{name}"  required="required"  placeholder="Entrez  le nom du groupe"/>
-										<span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Required field</span>
+										type="text" class="form-control" id="firstName" th:field="*{firstName}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Required field</span>
 								</div>
 
-
 								
-								<div class="form-group" th:classappend="${#fields.hasErrors('description')}? has-error">
-									<label for="description">Description</label>
-									<textarea class="form-control" id="description" rows="3"  th:field="*{description}"  required="required" ></textarea>
-									<span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Required field</span>
+								<div class="form-group col" th:classappend="${#fields.hasErrors('lastName')}? has-error">
+									
+									<label for="lastName" th:text="#{moniteurs.field.lastName}">Last name</label>
+									
+									 <input
+										type="text" class="form-control" id="lastName" th:field="*{lastName}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Required field</span>
+								</div>
 								</div>
 								
-								<div class="form-group">
-										<label for="anneeScolaire">Année scolaire</label> 
+							
+								<div class="row">
+									<div class="form-group col" th:classappend="${#fields.hasErrors('email')}? has-error">
+									
+									<label for="email" th:text="#{moniteurs.field.email}">Email</label>
+									
+									 <input
+										type="email" class="form-control" id="email" th:field="*{email}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Required field</span>
+								</div>
+								
+								<div class="form-group col" th:classappend="${#fields.hasErrors('password')}? has-error">
+									
+									<label for="password" th:text="#{moniteurs.field.password}">Password</label>
+									
+									<input
+										type="password" class="form-control" id="password" th:field="*{password}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Required field</span>
+								</div>	
+								
+								</div>
+								
+								
+								<div class="row">
+									<div class="form-group col" th:classappend="${#fields.hasErrors('phoneNumber')}? has-error">
+									
+									<label for="phoneNumber" th:text="#{moniteurs.field.phoneNumber}">06 15 66 77 66</label>
+									
+									 <input
+										type="tel" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Required field</span>
+								</div>
+								
+								<div class="form-group col" th:classappend="${#fields.hasErrors('birthDate')}? has-error">
+									
+									<label for="birthDate" th:text="#{moniteurs.field.birthDate}">06 15 66 77 66</label>
+									
+									 <input
+										type="text"  class="form-control" id="birthDate" th:field="*{birthDate}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Required field</span>
+								</div>
+								
+								</div>
+								
+								
+								<div class="form-group" > 
+ 										<label for="groupe" th:text="#{moniteurs.field.groupe}">Groupe</label>  
 										
-										<select th:field="*{anneeScolaire}"
-											 class="form-control" id="anneeScolaire">
-											
-										<option th:each="annee : ${listeAnneeScolaire}" th:value="${annee.annee}"		th:text="${annee.annee}">2017-2018</option>
-										</select>
-										<span class="text-danger" th:if="${#fields.hasErrors('anneeScolaire')}" th:errors="*{anneeScolaire}">Required field</span>
+										<select th:field="*{groupe.id}" 
+											 class="form-control" id="groupe"> 
+											<option value="" ></option>
+										<option th:each="groupe : ${listeGroupes}" th:value="${groupe.id}"		th:text="${groupe.name}">Fourmiz</option>
+										</select> 
+										
 									</div>
 
-								<div class="form-check">
+							<div class="row">
+								<div class="form-check col">
 									<label class="form-check-label"> 
-									<input type="checkbox" th:field="*{enabled}" class="form-check-input"/> <span th:text="#{groupe.field.enabled}">Enabled</span> 
+									<input type="checkbox" th:field="*{estCoequipier}" class="form-check-input"/> <span th:text="#{moniteurs.field.estCoequipier}">Est coéquipier</span> 
 									</label>
 								</div>
-
+								<div class="form-check col">
+									<label class="form-check-label"> 
+									<input type="checkbox" th:field="*{estReferent}" class="form-check-input"/> <span th:text="#{moniteurs.field.estReferent}">Est référent</span> 
+									</label>
+								</div>
+								<div class="form-check col">
+									<label class="form-check-label"> 
+									<input type="checkbox" th:field="*{enabled}" class="form-check-input"/> <span th:text="#{moniteurs.field.enabled}">Enabled</span> 
+									</label>
+								</div>	
 							
-								<a href="#" th:href="@{/groupes}" role="button" class="btn  btn-secondary">  			
+							</div>
+								<div class="row">
+										<div class="form-group col"  th:classappend="${#fields.hasErrors('listRoles')}? has-error">
+									 <label class="col-sm-5 control-label" >Roles</label>
+									</div>
+									
+									<div class="form-group col" th:each="role : ${allRoles}" th:classappend="${#fields.hasErrors('listRoles')}? has-error">
+									
+									
+											<label class="form-check-label"> 
+									<input type="checkbox" th:field="*{listRoles}" th:value="${role.name}"  class="form-check-input"/> <span  data-th-text="${role.name}">Role</span> 
+									 <span class="text-danger" th:if="${#fields.hasErrors('listRoles')}" th:errors="*{listRoles}">Required field</span>
+									</label>
+							
+							
+                            
+                        </div>
+								
+								</div>
+									
+							
+								<a href="#" th:href="@{/moniteurs}" role="button" class="btn  btn-secondary">  			
   									
          								<span th:text="#{cancel.button.label}">Cancel</span>
        								
 									</a>
-									<button type="submit" class="btn btn-primary"><span th:text="${groupe.id} ? #{update.button.label} : #{add.button.label}" ></span> </button>
+									<button type="submit" class="btn btn-primary"><span th:text="${moniteur.id} ? #{update.button.label} : #{add.button.label}" ></span> </button>
 								
 							</form>
 						</div>
@@ -193,6 +273,8 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
 		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
 		crossorigin="anonymous"></script>
+		
+	
 	<!-- 	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
@@ -216,6 +298,8 @@
         $('#dataTables-example').DataTable({
             responsive: true
         });
+        
+//         $( "#birthDate" ).datepicker();
     });
     </script>
 </body>

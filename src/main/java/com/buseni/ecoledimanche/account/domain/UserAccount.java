@@ -14,13 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.buseni.ecoledimanche.core.domain.BaseEntityAudit;
 import com.buseni.ecoledimanche.core.domain.Groupe;
-import com.buseni.ecoledimanche.core.domain.GroupeAnnuel;
 
 @Entity
 @Table(name = "user_account")
@@ -44,7 +44,8 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 	@Column(name ="est_coequipier")
 	private  Boolean estCoequipier;
 
-	
+	@Column(name ="est_referent")
+	private Boolean estReferent;
 
 	@Column(name ="token_expired")
 	private Boolean tokenExpired;
@@ -71,8 +72,11 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 	@JoinColumn(name="groupe_id")
 	private Groupe groupe;
 	
+	@Transient
+	private List<String> listRoles = new ArrayList<String>();
 	
 	public UserAccount() {
+		groupe = new Groupe();
 
 	}
 	
@@ -121,78 +125,9 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 				+ groupe + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + (estCoequipier ? 1231 : 1237);
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
-		result = prime * result + (tokenExpired ? 1231 : 1237);
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserAccount other = (UserAccount) obj;
-		if (birthDate == null) {
-			if (other.birthDate != null)
-				return false;
-		} else if (!birthDate.equals(other.birthDate))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (estCoequipier != other.estCoequipier)
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (groupe == null) {
-			if (other.groupe != null)
-				return false;
-		} else if (!groupe.equals(other.groupe))
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (phoneNumber == null) {
-			if (other.phoneNumber != null)
-				return false;
-		} else if (!phoneNumber.equals(other.phoneNumber))
-			return false;
-		if (roles == null) {
-			if (other.roles != null)
-				return false;
-		} else if (!roles.equals(other.roles))
-			return false;
-		if (tokenExpired != other.tokenExpired)
-			return false;
-		return true;
-	}
+
+	
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -246,6 +181,75 @@ public  class UserAccount extends BaseEntityAudit implements Serializable {
 
 	public Boolean getTokenExpired() {
 		return tokenExpired;
+	}
+
+	public Boolean getEstReferent() {
+		return estReferent;
+	}
+
+	public Boolean isEstReferent() {
+		return estReferent;
+	}
+
+	public void setEstReferent(Boolean estReferent) {
+		this.estReferent = estReferent;
+	}
+
+	public List<String> getListRoles() {
+		return listRoles;
+	}
+
+	public void setListRoles(List<String> listRoles) {
+		this.listRoles = listRoles;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserAccount other = (UserAccount) obj;
+		if (birthDate == null) {
+			if (other.birthDate != null)
+				return false;
+		} else if (!birthDate.equals(other.birthDate))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
+				return false;
+		} else if (!phoneNumber.equals(other.phoneNumber))
+			return false;
+		return true;
 	}
 
 	

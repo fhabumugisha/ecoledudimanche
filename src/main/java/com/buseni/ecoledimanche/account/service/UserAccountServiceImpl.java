@@ -2,13 +2,18 @@ package com.buseni.ecoledimanche.account.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -25,6 +30,7 @@ import com.buseni.ecoledimanche.account.domain.Role;
 import com.buseni.ecoledimanche.account.domain.UserAccount;
 import com.buseni.ecoledimanche.account.domain.VerificationToken;
 import com.buseni.ecoledimanche.account.repo.PasswordResetTokenRepo;
+import com.buseni.ecoledimanche.account.repo.RoleRepository;
 import com.buseni.ecoledimanche.account.repo.UserAccountRepository;
 import com.buseni.ecoledimanche.account.repo.VerificationTokenRepo;
 import com.buseni.ecoledimanche.exception.BusinessException;
@@ -49,6 +55,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 	@Autowired
 	private HttpServletRequest request;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Override
 	@Transactional
@@ -233,5 +242,151 @@ public class UserAccountServiceImpl implements UserAccountService {
 			throw new NullPointerException("Null password");
 		}
 		return userAccountRepository.findByEmail(userEmail);
+	}
+
+	@Override
+	@Transactional
+	public UserAccount addOrUpdate(UserAccount account) throws BusinessException {
+		//business control 
+		if(account == null){
+			throw new NullPointerException();
+		}
+		BusinessException be = new BusinessException();
+		if(StringUtils.isEmpty(account.getFirstName())){
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.moniteurs.field.null");			
+			CustomError  ce = ceb.field("firstName").errorArgs(new String[] { "firstName" }).buid();
+			be.addError(ce);
+		
+		}
+		if(StringUtils.isEmpty(account.getLastName())){
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.moniteurs.field.null");			
+			CustomError  ce = ceb.field("lastName").errorArgs(new String[] { "lastName" }).buid();
+			be.addError(ce);
+		
+		}
+		if(StringUtils.isEmpty(account.getEmail())){
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.moniteurs.field.null");			
+			CustomError  ce = ceb.field("email").errorArgs(new String[] { "email" }).buid();
+			be.addError(ce);
+		
+		}
+		if(StringUtils.isEmpty(account.getPhoneNumber())){
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.moniteur.field.null");			
+			CustomError  ce = ceb.field("phoneNumber").errorArgs(new String[] { "phoneNumber" }).buid();
+			be.addError(ce);
+		
+		}
+		if(account.getGroupe() == null || account.getGroupe().getId() == null){
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.moniteurs.field.null");			
+			CustomError  ce = ceb.field("groupe").errorArgs(new String[] { "Groupe" }).buid();
+			be.addError(ce);
+		
+		}
+		if(CollectionUtils.isEmpty(account.getListRoles())){
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.moniteurs.field.null");			
+			CustomError  ce = ceb.field("listRoles").errorArgs(new String[] { "Roles" }).buid();
+			be.addError(ce);
+		}
+		
+		if (account.getId()== null && emailExist(account.getEmail())) {
+			CustomErrorBuilder ceb = new CustomErrorBuilder(
+					"error.account.emailexists");
+			CustomError ce = ceb.field("email")
+					.errorArgs(new String[] { account.getEmail() }).buid();
+			be.addError(ce);
+
+		}
+		if(CollectionUtils.isNotEmpty(be.getErrors())){					
+			throw be;
+		}
+		
+		PasswordEncoder encoder = new BCryptPasswordEncoder();		
+		account.setPassword(encoder.encode(account.getPassword()));
+		
+		if(account.getId() == null) {
+			for (String roleName : account.getListRoles()) {
+				Role role  =  roleRepository.findByName(roleName);
+				if(role != null){
+					account.getRoles().add(role);
+				}
+			}
+			return userAccountRepository.save(account);
+			
+		}else {
+			UserAccount  dbUserAccount  =  userAccountRepository.findById(account.getId()).get();
+			//Changes in roles
+			List<Role> adminRoles = dbUserAccount.getRoles();
+			if (adminRoles.size() != account.getListRoles().size()) {
+				//Add new roles
+				if(account.getListRoles().size() > adminRoles.size()){
+					for (String roleName : account.getListRoles()) {					
+						if (!containsRole(adminRoles, roleName)) {
+							Role role = roleRepository.findByName(roleName);
+							dbUserAccount.getRoles().add(role);
+						}
+					}
+					//remove of roles
+				}else if(account.getListRoles().size() < adminRoles.size()){
+					List<Role> rolesToRemove = new ArrayList<Role>();
+					for (Role adminRole : adminRoles) {
+						for (String roleName : account.getListRoles()) {
+							if(!adminRole.getName().equals(roleName)){
+								rolesToRemove.add(adminRole);							
+							}
+						}
+					}
+					dbUserAccount.getRoles().removeAll(rolesToRemove);
+				}
+			}
+			dbUserAccount.setEstCoequipier(account.getEstCoequipier());
+			dbUserAccount.setEnabled(account.getEnabled());
+			dbUserAccount.setEstReferent(account.getEstReferent());
+			dbUserAccount.setFirstName(account.getFirstName());
+			dbUserAccount.setLastName(account.getLastName());
+			dbUserAccount.setBirthDate(account.getBirthDate());
+			return userAccountRepository.save(dbUserAccount);
+		}
+		
+	}
+
+	/*
+	 * 
+	 */
+	private boolean containsRole(List<Role> roles, String roleName){
+		for(Role role : roles){
+			if(role.getName().equals(roleName)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	@Override
+	public Page<UserAccount> findAll(Pageable pageable) {
+		if(pageable == null){
+			return new PageImpl<>(userAccountRepository.findAll());
+		}
+		return userAccountRepository.findAll(pageable);
+	}
+
+	@Override
+	public UserAccount findById(Integer id) {
+		if(id != null){
+			Optional<UserAccount> o = userAccountRepository.findById(id);
+			if(o.isPresent()){
+				return o.get();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public void delete(Integer id) {
+		if( id != null){
+			userAccountRepository.deleteById(id);
+		}
+		
 	}
 }

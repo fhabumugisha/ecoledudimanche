@@ -7,14 +7,11 @@ import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.buseni.ecoledimanche.account.domain.UserAccount;
 

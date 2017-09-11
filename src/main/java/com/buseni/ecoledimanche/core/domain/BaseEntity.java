@@ -20,7 +20,7 @@ public abstract class BaseEntity implements Serializable {
 	@Column(name="id")
 	protected Integer id;
 
-	private Boolean enabled;
+	protected Boolean enabled;
 	
 	public Integer getId() {
 		return id;

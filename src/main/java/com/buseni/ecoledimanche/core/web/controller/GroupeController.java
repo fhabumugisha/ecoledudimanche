@@ -2,6 +2,7 @@ package com.buseni.ecoledimanche.core.web.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.buseni.ecoledimanche.breadcrumbs.Navigation;
+import com.buseni.ecoledimanche.core.domain.AnneeScolaire;
 import com.buseni.ecoledimanche.core.domain.Groupe;
+import com.buseni.ecoledimanche.core.repo.AnneeScolaireRepo;
 import com.buseni.ecoledimanche.core.service.GroupeService;
 import com.buseni.ecoledimanche.exception.BusinessException;
 import com.buseni.ecoledimanche.exception.ErrorsHelper;
@@ -39,6 +42,9 @@ public static final Logger LOGGER = LoggerFactory.getLogger( GroupeController.cl
 
 @Autowired
 private GroupeService groupeService;
+
+@Autowired
+private AnneeScolaireRepo anneeScolaireRepo;
 	
 	@GetMapping("/groupes")
 	public String groupes(Model model, Pageable page){		
@@ -127,8 +133,9 @@ private GroupeService groupeService;
 	}
 	
 	@ModelAttribute("listeAnneeScolaire")
-	public List<String> listeAnneeScolaire(){
-		return Arrays.asList("2017-2018");
+	public List<AnneeScolaire> listeAnneeScolaire(){
+		 
+		return anneeScolaireRepo.findAll();
 	}
 	
 	/**
