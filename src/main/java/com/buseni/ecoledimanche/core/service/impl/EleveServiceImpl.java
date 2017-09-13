@@ -31,8 +31,8 @@ public class EleveServiceImpl implements EleveService {
 	
 	private EleveRepo eleveRepo;
 	
-	public EleveServiceImpl() {
-		// TODO Auto-generated constructor stub
+	public EleveServiceImpl(EleveRepo eleveRepo) {
+		this.eleveRepo = eleveRepo;
 	}
 
 	/* (non-Javadoc)
@@ -46,27 +46,27 @@ public class EleveServiceImpl implements EleveService {
 					throw new NullPointerException();
 				}
 				BusinessException be = new BusinessException();
-				if(StringUtils.isEmpty(eleve.getNom())){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.nom.null");			
-					CustomError  ce = ceb.field("nom").buid();
-					be.addError(ce);
-				
-				}
+//				if(StringUtils.isEmpty(eleve.getNom())){
+//					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+//					CustomError  ce = ceb.field("nom").errorArgs(new String[] { "Nom" }).buid();
+//					be.addError(ce);
+//				
+//				}
 				if(StringUtils.isEmpty(eleve.getPrenom())){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.prenom.null");			
-					CustomError  ce = ceb.field("prenom").buid();
+					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+					CustomError  ce = ceb.field("prenom").errorArgs(new String[] { "Prénom" }).buid();
 					be.addError(ce);
 				
 				}
 				if(null == eleve.getAge()){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.age.null");			
-					CustomError  ce = ceb.field("age").buid();
+					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+					CustomError  ce = ceb.field("age").errorArgs(new String[] { "Age" }).buid();
 					be.addError(ce);
 				
 				}
 				if(eleve.getGroupe() == null || eleve.getGroupe().getId() == null){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.groupe.null");			
-					CustomError  ce = ceb.field("groupe").buid();
+					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+					CustomError  ce = ceb.field("groupe").errorArgs(new String[] { "Groupe" }).buid();
 					be.addError(ce);
 				
 				}
@@ -89,27 +89,27 @@ public class EleveServiceImpl implements EleveService {
 			throw new NullPointerException();
 		}
 		BusinessException be = new BusinessException();
-		if(StringUtils.isEmpty(eleve.getNom())){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.nom.null");			
-			CustomError  ce = ceb.field("nom").buid();
-			be.addError(ce);
-		
-		}
+//		if(StringUtils.isEmpty(eleve.getNom())){
+//			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+//			CustomError  ce = ceb.field("nom").buid();
+//			be.addError(ce);
+//		
+//		}
 		if(StringUtils.isEmpty(eleve.getPrenom())){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.prenom.null");			
-			CustomError  ce = ceb.field("prenom").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+			CustomError  ce = ceb.field("prenom").errorArgs(new String[] { "Prénom" }).buid();
 			be.addError(ce);
 		
 		}
 		if(null == eleve.getAge()){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.age.null");			
-			CustomError  ce = ceb.field("age").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+			CustomError  ce = ceb.field("age").errorArgs(new String[] { "Age" }).buid();
 			be.addError(ce);
 		
 		}
 		if(eleve.getGroupe() == null || eleve.getGroupe().getId() == null){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleve.groupe.null");			
-			CustomError  ce = ceb.field("groupe").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
+			CustomError  ce = ceb.field("groupe").errorArgs(new String[] { "Groupe" }).buid();
 			be.addError(ce);
 		
 		}

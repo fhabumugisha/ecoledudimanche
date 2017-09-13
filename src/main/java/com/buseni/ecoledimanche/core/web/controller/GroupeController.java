@@ -56,7 +56,9 @@ private AnneeScolaireRepo anneeScolaireRepo;
 		model.addAttribute("page", pageWrapper);
 		model.addAttribute("groupes", pageGroupes.getContent());	
 		if(!model.containsAttribute("groupe")){
-			model.addAttribute("groupe", new Groupe());
+			Groupe groupe = new Groupe();
+			groupe.setEnabled(true);
+			model.addAttribute("groupe", groupe);
 		}
 		return "groupes/listeGroupes";
 	}
@@ -66,9 +68,11 @@ private AnneeScolaireRepo anneeScolaireRepo;
 	public String newGroupe(Model model){	
 
 		LOGGER.info("IN: Groupes/new-GET");
-		Groupe groupe = new Groupe();
-		groupe.setEnabled(true);
-		model.addAttribute("groupe", groupe);
+		if(!model.containsAttribute("groupe")){
+			Groupe groupe = new Groupe();
+			groupe.setEnabled(true);
+			model.addAttribute("groupe", groupe);
+		}
 		return "groupes/editGroupe";
 	}
 

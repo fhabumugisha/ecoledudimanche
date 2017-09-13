@@ -44,8 +44,8 @@ public class GroupeServiceImpl implements GroupeService {
 					throw new NullPointerException();
 				}
 				if(StringUtils.isEmpty(groupe.getName())){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupe.name.null");			
-					CustomError  ce = ceb.field("name").buid();
+					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupes.field.null");			
+					CustomError  ce = ceb.field("name").errorArgs(new String[] { "Nom" }).buid();
 					throw new BusinessException(ce);
 				}
 				return groupeRepo.save(groupe);
@@ -62,8 +62,8 @@ public class GroupeServiceImpl implements GroupeService {
 			throw new NullPointerException();
 		}
 		if(StringUtils.isEmpty(groupe.getName())){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupe.name.null");			
-			CustomError  ce = ceb.field("name").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.groupes.field.null");			
+			CustomError  ce = ceb.field("name").errorArgs(new String[] { "Nom" }).buid();
 			throw new BusinessException(ce);
 		}
 		return groupeRepo.save(groupe);

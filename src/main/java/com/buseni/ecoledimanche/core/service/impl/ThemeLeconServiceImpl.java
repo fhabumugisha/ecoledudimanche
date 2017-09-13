@@ -29,8 +29,8 @@ public class ThemeLeconServiceImpl implements ThemeLeconService {
 
 	private ThemeLeconRepo themeLeconRepo;
 
-	public ThemeLeconServiceImpl() {
-		// TODO Auto-generated constructor stub
+	public ThemeLeconServiceImpl(ThemeLeconRepo themeLeconRepo) {
+		this.themeLeconRepo = themeLeconRepo;
 	}
 
 	/* (non-Javadoc)
@@ -44,8 +44,8 @@ public class ThemeLeconServiceImpl implements ThemeLeconService {
 			throw new NullPointerException();
 		}
 		if(StringUtils.isEmpty(themeLecon.getName())){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.themelecon.name.null");			
-			CustomError  ce = ceb.field("name").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.themes.field.null");			
+			CustomError  ce = ceb.field("name").errorArgs(new String[] { "Nom" }).buid();
 			throw new BusinessException(ce);
 		}
 		return themeLeconRepo.save(themeLecon);
@@ -62,8 +62,8 @@ public class ThemeLeconServiceImpl implements ThemeLeconService {
 			throw new NullPointerException();
 		}
 		if(StringUtils.isEmpty(themeLecon.getName())){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.themelecon.name.null");			
-			CustomError  ce = ceb.field("name").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.themes.field.null");			
+			CustomError  ce = ceb.field("name").errorArgs(new String[] { "Nom" }).buid();
 			throw new BusinessException(ce);
 		}
 		return themeLeconRepo.save(themeLecon);

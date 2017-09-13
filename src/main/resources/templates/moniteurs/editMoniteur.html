@@ -200,7 +200,7 @@
 								<div class="form-group" > 
  										<label for="groupe" th:text="#{moniteurs.field.groupe}">Groupe</label>  
 										
-										<select th:field="*{groupe.id}" 
+										<select th:field="*{groupe.id}" required="required"
 											 class="form-control" id="groupe"> 
 											<option value="" ></option>
 										<option th:each="groupe : ${listeGroupes}" th:value="${groupe.id}"		th:text="${groupe.name}">Fourmiz</option>

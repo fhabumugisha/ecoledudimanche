@@ -130,7 +130,7 @@
 			
 <!-- 			<div class="well well-sm"> -->
 			
-<!-- 				<a href="/editTheme" th:href="@{/themes/new}">  			 -->
+<!-- 				<a href="/editGroupe" th:href="@{/themes/new}">  			 -->
 <!--   				<button type="button" class="btn  btn-primary btn-xs"> -->
 <!--          			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	 -->
 <!--          			<span th:text="#{theme.add}">Add</span> -->
@@ -151,9 +151,10 @@
 								<thead>
 									<tr>
 										<th >#</th>
-										<th th:text="#{theme.field.name}">Name</th>
-										<th th:text="#{theme.field.description}">Description</th>
-										<th th:text="#{theme.field.enabled}">Actif</th>
+										<th th:text="#{themes.field.name}">Name</th>
+										<th th:text="#{themes.field.description}">Description</th>
+										
+										<th th:text="#{themes.field.enabled}">Actif</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -164,7 +165,8 @@
 										<td th:text="${theme.id}">1</td>
 										<td th:text="${theme.name}">Fourmiz</td>
 										<td th:text="${theme.description}">6ans à 7 ans</td>
-										<td th:text="${theme.enabled}">Oui</td>
+										
+										<td th:text="${theme.enabled}? 'Oui' : 'Non'">Oui</td>
 										<td>
 											<a href="#"
 													th:href="@{/themes/edit(id=${theme.id})}">
@@ -177,7 +179,7 @@
 												</a>
 												 <a href="#"
 													th:href="@{/themes/delete(id=${theme.id})}"
-													class="deleteTheme">
+													class="deleteGroupe">
 
 														<i class="fa fa-trash-o fa-fw"></i>
 														
@@ -298,7 +300,11 @@
             			location.href = this.node().prop("href");
             			}
             		}
-            	]
+            	],
+            	"columnDefs": [
+            	    { "orderable": false, "targets":0 },
+            	    { "orderable": false, "targets":4 }
+            	  ]
         } );
 //     	$("<div class='row'></div>").prependTo('#dataTables-example_wrapper');
     	table.buttons().container().wrap("<div class='col-md-6 dt-ctrls'></div>");

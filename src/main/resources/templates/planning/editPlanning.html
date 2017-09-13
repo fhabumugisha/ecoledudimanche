@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Gestion Club biblique - Espace Mono</title>
+<title th:text="${planning.id} ? #{planning.edit.title} : #{planning.create.title}">Edit planning</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -16,9 +16,12 @@
 	crossorigin="anonymous">
 
 <!-- Custom styles for this template -->
-<link href="dashboard.css" rel="stylesheet"
-	th:href="@{css/dashboard.css}" />
+<link href="../../static/css/dashboard.css" rel="stylesheet"
+	th:href="@{/css/dashboard.css}" />
 
+<link href="../../static/vendor/chosen/chosen.min.css" rel="stylesheet"
+	th:href="@{/vendor/chosen/chosen.min.css}" />	
+	
 <!-- DataTables CSS -->
 <link
 	href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css"
@@ -28,6 +31,9 @@
 <link
 	href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap4.min.css"
 	rel="stylesheet" />
+	
+
+	
 </head>
 
 <body>
@@ -105,68 +111,73 @@
 			</nav>
 
 			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-			<h1>Groupes</h1>
+			
+			
+			<div th:if="${message}" class="alert alert-success" th:text="${message}">Cool</div>
+			
+			
 			<div class="row">
 				<div class="col-md-8">
 					
 				
 						<div class="card">
-						<div class="card-header">Editer un groupe</div>
+						<div class="card-header"><span th:text="${planning.id} ? #{planning.edit.title} : #{planning.create.title}">Editer un planning</span> </div>
 						<div class="card-block">
-								<form>
-									<div class="form-group">
-										<label for="exampleInputEmail1">Titre</label> <input
-											type="email" class="form-control" id="exampleInputEmail1"
-											aria-describedby="emailHelp" placeholder="Titre de la séance">
-										
-									</div>
+							<form role="form" action="#" th:action="@{/planning/save}" th:object="${planning}" method="post">
+
+								<div th:if="${#fields.hasGlobalErrors()}"
+									class="alert alert-danger">
+									<ul>
+										<li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Input
+											is incorrect</li>
+									</ul>
+								</div>
+								<input type="text" hidden="hidden" th:field="*{id}" class="hidden" />
+								
+								<div class="form-group" th:classappend="${#fields.hasErrors('date')}? has-error">
 									
+									<label for="date" th:text="#{planning.field.date}">Date</label>
 									
-									<div class="form-group">
-										<label for="exampleSelect2">Moniteurs</label> <select
-											multiple class="form-control" id="exampleSelect2">
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
+									 <input
+										type="text" class="form-control" id="date" th:field="*{date}"   />
+										<span class="text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Required field</span>
+								</div>
+
+								<div class="form-group">
+										<label for="moniteurs" th:text="#{planning.field.moniteurs}">Moniteurs</label> 
+										<select multiple th:field="*{moniteurs}" 
+											 class="form-control moniteur_select_box" id="moniteurs">
+											
+											<option th:each="moniteur : ${listeMoniteurs}" th:value="${moniteur.id}"	th:text="${moniteur.firstName} + ' ' +${moniteur.lastName}  ">Fourmiz</option>
+											
 										</select>
+										<span class="text-danger" th:if="${#fields.hasErrors('moniteurs')}" th:errors="*{moniteurs}">Required field</span>
 									</div>
-									<div class="form-group">
-										<label for="exampleTextarea">Description</label>
-										<textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-									</div>
-									<div class="form-group">
-										<label for="exampleInputFile">Pièce jointe</label> <input
-											type="file" class="form-control-file" id="exampleInputFile"
-											aria-describedby="fileHelp"> <small id="fileHelp"
-											class="form-text text-muted">Vous pouvez mettre le document utilisé pour votre séance</small>
-									</div>
-									<fieldset class="form-group">
-										<legend>Categorie séance</legend>
-										<div class="form-check">
-											<label class="form-check-label"> <input type="radio"
-												class="form-check-input" name="optionsRadios"
-												id="optionsRadios1" value="option1" checked> Lecture bible
-											</label>
-										</div>
-										<div class="form-check">
-											<label class="form-check-label"> <input type="radio"
-												class="form-check-input" name="optionsRadios"
-												id="optionsRadios2" value="option2"> Jeux biblique
-											</label>
-										</div>
-										<div class="form-check disabled">
-											<label class="form-check-label"> <input type="radio"
-												class="form-check-input" name="optionsRadios"
-												id="optionsRadios3" value="option3" disabled> Préparation spéctacle
-											</label>
-										</div>
-									</fieldset>
-									<a  th:href="@{groupes}" class="btn btn-default">Annuler</a>
-									<button type="submit" class="btn btn-primary">Enregistrer</button>
-								</form>
-							</div>
+								
+								<div class="form-group" th:classappend="${#fields.hasErrors('commentaire')}? has-error">
+									<label for="commentaire" th:text="#{planning.field.commentaire}">Description</label>
+									<textarea class="form-control" id="commentaire" rows="3"  th:field="*{commentaire}"  ></textarea>
+									<span class="text-danger" th:if="${#fields.hasErrors('commentaire')}" th:errors="*{commentaire}">Required field</span>
+								</div>
+								
+								
+
+								<div class="form-check">
+									<label class="form-check-label"> 
+									<input type="checkbox" th:field="*{enabled}" class="form-check-input"/> <span th:text="#{planning.field.enabled}">Enabled</span> 
+									</label>
+								</div>
+
+							
+								<a href="#" th:href="@{/planning}" role="button" class="btn  btn-secondary">  			
+  									
+         								<span th:text="#{cancel.button.label}">Cancel</span>
+       								
+									</a>
+									<button type="submit" class="btn btn-primary"><span th:text="${planning.id} ? #{update.button.label} : #{add.button.label}" ></span> </button>
+								
+							</form>
+						</div>
 					</div>
 					
 					
@@ -202,12 +213,21 @@
 		src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+		
+	<script src="../../static/vendor/chosen/chosen.jquery.js"
+		th:src="@{/vendor/chosen/chosen.jquery.js}"></script>
 
 	<script>
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
             responsive: true
         });
+        
+        $(".moniteur_select_box").chosen({
+		    disable_search_threshold: 10,
+		    no_results_text: "Oops, pas de résultat!",
+		    width: "95%"
+		  });
     });
     </script>
 </body>

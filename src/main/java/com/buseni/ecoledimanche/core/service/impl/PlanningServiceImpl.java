@@ -30,8 +30,8 @@ public class PlanningServiceImpl implements PlanningService {
 	
 	private PlanningRepo planningRepo;
 	
-	public PlanningServiceImpl() {
-		// TODO Auto-generated constructor stub
+	public PlanningServiceImpl(PlanningRepo planningRepo) {
+		this.planningRepo = planningRepo;
 	}
 
 	/* (non-Javadoc)
@@ -46,15 +46,15 @@ public class PlanningServiceImpl implements PlanningService {
 				}
 				BusinessException be = new BusinessException();
 				if(null == planning.getDate()){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.date.null");			
-					CustomError  ce = ceb.field("date").buid();
+					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.field.null");			
+					CustomError  ce = ceb.field("date").errorArgs(new String[] { "Date" }).buid();
 					be.addError(ce);
 				
 				}
 				
 				if(CollectionUtils.isEmpty(planning.getMoniteurs())){
-					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.moniteurs.null");			
-					CustomError  ce = ceb.field("moniteurs").buid();
+					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.field.null");			
+					CustomError  ce = ceb.field("moniteurs").errorArgs(new String[] { "Moniteurs" }).buid();
 					be.addError(ce);
 				
 				}
@@ -79,15 +79,15 @@ public class PlanningServiceImpl implements PlanningService {
 		}
 		BusinessException be = new BusinessException();
 		if(null == planning.getDate()){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.date.null");			
-			CustomError  ce = ceb.field("date").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.field.null");			
+			CustomError  ce = ceb.field("date").errorArgs(new String[] { "Date" }).buid();
 			be.addError(ce);
 		
 		}
 		
 		if(CollectionUtils.isEmpty(planning.getMoniteurs())){
-			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.moniteurs.null");			
-			CustomError  ce = ceb.field("moniteurs").buid();
+			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.planning.field.null");			
+			CustomError  ce = ceb.field("moniteurs").errorArgs(new String[] { "Moniteurs" }).buid();
 			be.addError(ce);
 		
 		}

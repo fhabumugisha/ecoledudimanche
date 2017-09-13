@@ -46,9 +46,11 @@ private ThemeLeconService themeLeconService;
 		model.addAttribute("page", pageWrapper);
 		model.addAttribute("themes", pageThemes.getContent());	
 		if(!model.containsAttribute("theme")){
-			model.addAttribute("theme", new ThemeLecon());
+			ThemeLecon theme = new ThemeLecon();
+			theme.setEnabled(true);
+			model.addAttribute("theme", theme);
 		}
-		return "lecons/listeLecons";
+		return "lecons/listeThemes";
 	}
 
 	
@@ -56,7 +58,11 @@ private ThemeLeconService themeLeconService;
 	public String newTheme(Model model){	
 
 		LOGGER.info("IN: Themes/new-GET");
-		model.addAttribute("theme", new ThemeLecon());
+		if(!model.containsAttribute("theme")){
+			ThemeLecon theme = new ThemeLecon();
+			theme.setEnabled(true);
+			model.addAttribute("theme", theme);
+		}
 		return "lecons/editTheme";
 	}
 
@@ -109,7 +115,7 @@ private ThemeLeconService themeLeconService;
 				return "lecons/editTheme";
 			}
 
-			String message = "ThemeLecon " + theme.getId() + " was successfully added";
+			String message = "Theme " + theme.getId() + " was successfully added";
 			attributes.addFlashAttribute("message", message);
 			return "redirect:/themes";
 		}

@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title th:text="${theme.id} ? #{themes.edit.title} : #{themes.create.title}">Edit theme</title>
+<title th:text="${eleve.id} ? #{eleves.edit.title} : #{eleves.create.title}">Edit eleve</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -118,51 +118,129 @@
 					
 				
 						<div class="card">
-						<div class="card-header"><span th:text="${theme.id} ? #{themes.edit.title} : #{themes.create.title}">Editer un theme</span> </div>
+						<div class="card-header"><span th:text="${eleve.id} ? #{eleves.edit.title} : #{eleves.create.title}">Editer un élève</span> </div>
 						<div class="card-block">
-							<form role="form" action="#" th:action="@{/themes/save}" th:object="${theme}" method="post">
+							<form role="form" action="#" th:action="@{/eleves/save}" th:object="${eleve}" method="post">
 
-								<div th:if="${#fields.hasGlobalErrors()}"
+								<div th:if="${#fields.hasErrors('*')}"
 									class="alert alert-danger">
 									<ul>
-										<li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Input
+										<li th:each="err : ${#fields.allErrors()}" th:text="${err}">Input
 											is incorrect</li>
 									</ul>
 								</div>
 								<input type="text" hidden="hidden" th:field="*{id}" class="hidden" />
 								
-								<div class="form-group" th:classappend="${#fields.hasErrors('name')}? has-error">
+								<div class="row">
+											<div class="form-group col" th:classappend="${#fields.hasErrors('prenom')}? has-error">
 									
-									<label for="name" th:text="#{themes.field.name}">Name</label>
+									<label for="prenom" th:text="#{eleves.field.prenom}">First name</label>
 									
 									 <input
-										type="text" class="form-control" id="name" th:field="*{name}"  />
-										<span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Required field</span>
+										type="text" class="form-control" id="prenom" th:field="*{prenom}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('prenom')}" th:errors="*{prenom}">Required field</span>
 								</div>
 
-
 								
-								<div class="form-group" th:classappend="${#fields.hasErrors('description')}? has-error">
-									<label for="description" th:text="#{themes.field.description}">Description</label>
-									<textarea class="form-control" id="description" rows="3"  th:field="*{description}"  required="required" ></textarea>
-									<span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Required field</span>
+								<div class="form-group col" th:classappend="${#fields.hasErrors('nom')}? has-error">
+									
+									<label for="nom" th:text="#{eleves.field.nom}">Last name</label>
+									
+									 <input
+										type="text" class="form-control" id="nom" th:field="*{nom}"   />
+										<span class="text-danger" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}">Required field</span>
+								</div>
 								</div>
 								
-								
-
-								<div class="form-check">
-									<label class="form-check-label"> 
-									<input type="checkbox" th:field="*{enabled}" class="form-check-input"/> <span th:text="#{themes.field.enabled}">Enabled</span> 
-									</label>
-								</div>
-
 							
-								<a href="#" th:href="@{/themes}" role="button" class="btn  btn-secondary">  			
+								<div class="row">
+									<div class="form-group col" th:classappend="${#fields.hasErrors('age')}? has-error">
+									
+									<label for="age" th:text="#{eleves.field.age}">Age</label>
+									
+									 <input
+										type="text" class="form-control" id="age" th:field="*{age}"  required="required"  />
+										<span class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Required field</span>
+								</div>
+								
+								<div class="form-group col" th:classappend="${#fields.hasErrors('classe')}? has-error">
+									
+									<label for="classe" th:text="#{eleves.field.classe}">Classe</label>
+									
+									<input
+										type="text" class="form-control" id="classe" th:field="*{classe}"    />
+										<span class="text-danger" th:if="${#fields.hasErrors('classe')}" th:errors="*{classe}">Required field</span>
+								</div>	
+								
+								</div>
+								
+								<div class="row">
+									<div class="form-group col" th:classappend="${#fields.hasErrors('dateNaissance')}? has-error">
+									
+									<label for="dateNaissance" th:text="#{eleves.field.dateNaissance}">12/12/2017</label>
+									
+									 <input
+										type="text" class="form-control" id="dateNaissance" th:field="*{dateNaissance}"    />
+										<span class="text-danger" th:if="${#fields.hasErrors('dateNaissance')}" th:errors="*{dateNaissance}">Required field</span>
+								</div>
+								
+									<div class="form-group col" > 
+ 										<label for="groupe" th:text="#{eleves.field.groupe}">Groupe</label>  
+										
+										<select th:field="*{groupe.id}" required="required"
+											 class="form-control" id="groupe"> 
+											<option value="" ></option>
+										<option th:each="groupe : ${listeGroupes}" th:value="${groupe.id}"		th:text="${groupe.name}">Fourmiz</option>
+										</select> 
+										
+									</div>
+								
+								</div>
+								<div class="row">
+									<div class="form-group col" th:classappend="${#fields.hasErrors('contact')}? has-error">
+									
+									<label for="contact" th:text="#{eleves.field.contact}">Maman</label>
+									<textarea rows="2" cols="60" class="form-control" id="contact" th:field="*{contact}" ></textarea>
+									
+										<span class="text-danger" th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}">Required field</span>
+								</div>
+								
+								
+								
+								</div>
+								
+								
+								
+
+							<div class="row">
+								
+								<div class="form-check col">
+									<label class="form-check-label"> 
+									<input type="checkbox" th:field="*{enabled}" class="form-check-input"/> <span th:text="#{eleves.field.enabled}">Enabled</span> 
+									</label>
+								</div>	
+							
+							</div>
+							<div class="row">
+									<div class="form-group col" th:classappend="${#fields.hasErrors('commentaire')}? has-error">
+									
+									<label for="commentaire" th:text="#{eleves.field.commentaire}">Commentaire</label>
+									<textarea rows="2" cols="60" class="form-control" id="contact" th:field="*{commentaire}" ></textarea>
+									
+										<span class="text-danger" th:if="${#fields.hasErrors('commentaire')}" th:errors="*{commentaire}">Required field</span>
+								</div>
+								
+								
+								
+								</div>
+									
+							
+								<a href="#" th:href="@{/eleves}" role="button" class="btn  btn-secondary">  			
   									
          								<span th:text="#{cancel.button.label}">Cancel</span>
        								
 									</a>
-									<button type="submit" class="btn btn-primary"><span th:text="${theme.id} ? #{update.button.label} : #{add.button.label}" ></span> </button>
+									<button type="submit" class="btn btn-primary"><span th:text="${eleve.id} ? #{update.button.label} : #{add.button.label}" ></span> </button>
 								
 							</form>
 						</div>
@@ -184,6 +262,8 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
 		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
 		crossorigin="anonymous"></script>
+		
+	
 	<!-- 	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
@@ -207,6 +287,8 @@
         $('#dataTables-example').DataTable({
             responsive: true
         });
+        
+//         $( "#birthDate" ).datepicker();
     });
     </script>
 </body>

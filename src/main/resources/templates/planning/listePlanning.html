@@ -7,13 +7,13 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Gestion Club biblique - Espace Mono</title>
+<title  th:text="#{planning.title}">Gestion Club biblique - Espace Mono</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-	crossorigin="anonymous">
+	crossorigin="anonymous"/>
 
 <!-- Custom styles for this template -->
 <link href="dashboard.css" rel="stylesheet"
@@ -28,6 +28,13 @@
 <link
 	href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap4.min.css"
 	rel="stylesheet" />
+	
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+	
+	
+	<link href="https://cdn.datatables.net/buttons/1.4.0/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+	
 </head>
 
 <body>
@@ -105,205 +112,120 @@
 			</nav>
 
 			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-			<h1>Séances</h1>
-			<div class="row">
-				<div class="col-md-8">
-					<p>
-					<a class="btn btn-primary"  data-toggle="collapse" th:href="@{groupes/new}" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Ajouter un group</a>
-				</p>
-				
-					
-				</div>
+			
+		
+			<div th:if="${message}" class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+   					 <span aria-hidden="true">&times;</span>
+ 				 </button>
+				<span th:text="${message}">Cool</span>
 			</div>
 			
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">La liste des séances</div>
-						<!-- /.panel-heading -->
-						<div class="panel-body">
-							<table width="100%"
+		
+		
+		
+			<h4  th:text="#{planning.title}">Listing plannings</h4>
+			
+			
+			
+<!-- 			<div class="well well-sm"> -->
+			
+<!-- 				<a href="/editGroupe" th:href="@{/plannings/new}">  			 -->
+<!--   				<button type="button" class="btn  btn-primary btn-xs"> -->
+<!--          			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp;	 -->
+<!--          			<span th:text="#{planning.add}">Add</span> -->
+<!--        			</button> -->
+<!-- 				</a>  -->
+<!-- 			</div> -->
+			
+		
+			
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-lg-12"> -->
+				
+						
+						
+							<table 
 								class="table table-striped table-bordered table-hover"
 								id="dataTables-example">
 								<thead>
 									<tr>
-										<th>Rendering engine</th>
-										<th>Browser</th>
-										<th>Platform(s)</th>
-										<th>Engine version</th>
-										<th>CSS grade</th>
+										<th >#</th>
+										<th th:text="#{planning.field.date}">12/12/2000</th>
+										<th th:text="#{planning.field.moniteurs}">Fab, BOb</th>
+										<th th:text="#{planning.field.commentaire}">Fab absent</th>
+										<th th:text="#{planning.field.enabled}">Actif</th>
+										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr class="odd gradeX">
+
+									<tr th:each="planning : ${listePlanning}"
+										th:classappend="${planningStat.odd}? 'odd'">
+										<td th:text="${planning.id}">1</td>
+										<td th:text="${planning.date}">Fourmiz</td>
+										<td ><ul th:each="mono : ${moniteurs}"> 
+											<li ><span th:text="${mono.firstName} + ' ' + ${mono.lastName} "></span> <span th:if="${mono.estCoequipier}" th:text="'(Coéquipier)'"></span> </li> 
+										</ul>
+										</td>
+										<td th:text="${planning.commentaire}">6ans à 7 ans</td>
+										
+										<td th:text="${planning.enabled}? 'Oui' : 'Non'">Oui</td>
+										<td>
+											<a href="#"
+													th:href="@{/planning/edit(id=${planning.id})}">
+
+
+															<i class="fa fa-pencil-square-o" ></i>
+															
+
+
+												</a>
+												 <a href="#"
+													th:href="@{/planning/delete(id=${planning.id})}"
+													class="deleteGroupe">
+
+														<i class="fa fa-trash-o fa-fw"></i>
+														
+
+
+
+												</a>
+										</td>
+										
+									</tr>
+									<tr th:remove="all" class="odd gradeX">
 										<td>Trident</td>
 										<td>Internet Explorer 4.0</td>
 										<td>Win 95+</td>
 										<td class="center">4</td>
 										<td class="center">X</td>
 									</tr>
-									<tr class="even gradeC">
+									<tr th:remove="all" class="even gradeC">
 										<td>Trident</td>
 										<td>Internet Explorer 5.0</td>
 										<td>Win 95+</td>
 										<td class="center">5</td>
 										<td class="center">C</td>
 									</tr>
-									<tr class="odd gradeA">
+									<tr th:remove="all" class="odd gradeA">
 										<td>Trident</td>
 										<td>Internet Explorer 5.5</td>
 										<td>Win 95+</td>
 										<td class="center">5.5</td>
 										<td class="center">A</td>
 									</tr>
-									<tr class="even gradeA">
-										<td>Trident</td>
-										<td>Internet Explorer 6</td>
-										<td>Win 98+</td>
-										<td class="center">6</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="odd gradeA">
-										<td>Trident</td>
-										<td>Internet Explorer 7</td>
-										<td>Win XP SP2+</td>
-										<td class="center">7</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="even gradeA">
-										<td>Trident</td>
-										<td>AOL browser (AOL desktop)</td>
-										<td>Win XP</td>
-										<td class="center">6</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Firefox 1.0</td>
-										<td>Win 98+ / OSX.2+</td>
-										<td class="center">1.7</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Firefox 1.5</td>
-										<td>Win 98+ / OSX.2+</td>
-										<td class="center">1.8</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Firefox 2.0</td>
-										<td>Win 98+ / OSX.2+</td>
-										<td class="center">1.8</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Firefox 3.0</td>
-										<td>Win 2k+ / OSX.3+</td>
-										<td class="center">1.9</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Camino 1.0</td>
-										<td>OSX.2+</td>
-										<td class="center">1.8</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Camino 1.5</td>
-										<td>OSX.3+</td>
-										<td class="center">1.8</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Netscape 7.2</td>
-										<td>Win 95+ / Mac OS 8.6-9.2</td>
-										<td class="center">1.7</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Netscape Browser 8</td>
-										<td>Win 98SE+</td>
-										<td class="center">1.7</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Netscape Navigator 9</td>
-										<td>Win 98+ / OSX.2+</td>
-										<td class="center">1.8</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Mozilla 1.0</td>
-										<td>Win 95+ / OSX.1+</td>
-										<td class="center">1</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Mozilla 1.1</td>
-										<td>Win 95+ / OSX.1+</td>
-										<td class="center">1.1</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Mozilla 1.2</td>
-										<td>Win 95+ / OSX.1+</td>
-										<td class="center">1.2</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Mozilla 1.3</td>
-										<td>Win 95+ / OSX.1+</td>
-										<td class="center">1.3</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Mozilla 1.4</td>
-										<td>Win 95+ / OSX.1+</td>
-										<td class="center">1.4</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Mozilla 1.5</td>
-										<td>Win 95+ / OSX.1+</td>
-										<td class="center">1.5</td>
-										<td class="center">A</td>
-									</tr>
-									<tr class="gradeA">
-										<td>Gecko</td>
-										<td>Mozilla 1.6</td>
-										<td>Win 95+ / OSX.1+</td>
-										<td class="center">1.6</td>
-										<td class="center">A</td>
-									</tr>
+									
 
 								</tbody>
 							</table>
-							<!-- /.table-responsive -->
-							<div class="well">
-								<h4>La liste des séances</h4>
-								<p>Enseignements, activités, etc...</p>
-							</div>
-						</div>
-						<!-- /.panel-body -->
-					</div>
-					<!-- /.panel -->
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
+							
+						
+					
+					
+<!-- 				</div> -->
+<!-- 				/.col-lg-12 -->
+<!-- 			</div> -->
 
 			</main>
 		</div>
@@ -315,6 +237,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
 		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
 		crossorigin="anonymous"></script>
+		
 	<!-- 	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
@@ -332,13 +255,71 @@
 		src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+		
+	<script
+		src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap4.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/dataTables.buttons.min.js"></script>
+		
+		<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.bootstrap4.min.js"></script>
+		
+	<script type="text/javascript"   src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
+<script
+		src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+		
+		<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+
+<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.html5.min.js"></script>
+<script
+		src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.print.min.js"></script>
+
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var context = /*[[@{/}]]*/ 'localhost:8080';
+	/*]]>*/
+	
+	</script>
+	
 	<script>
+	
     $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
+    	
+    	var table = $('#dataTables-example').DataTable( {
+    		dom: 'Bfrtip',
+    		lengthChange: false,
+            responsive: true,
+            buttons: [ 'csvHtml5', 'pdf', 'print' , 
+            		{
+            		text :'Nouveau',
+            		init : function ( dt, node , config){
+            			this.node().removeClass("btn-secondary").addClass("btn-primary");
+            			this.node().prop("href", "/planning/new");
+
+            			},
+            		
+            		action: function (e , dt, node , config){
+            			location.href = this.node().prop("href");
+            			}
+            		}
+            	],
+            	"columnDefs": [
+            	    { "orderable": false, "targets":0 },
+            	    { "orderable": false, "targets":5 }
+            	  ]
+        } );
+//     	$("<div class='row'></div>").prependTo('#dataTables-example_wrapper');
+    	table.buttons().container().wrap("<div class='col-md-6 dt-ctrls'></div>");
+    	$("#dataTables-example_filter").wrap("<div class='col-md-6 dt-ctrls'></div>");
+    	$(".dt-ctrls").wrapAll("<div class='row'></div>");
+//     	table.buttons().container().appendTo( '#dataTables-example_wrapper .col-md-6:eq(0)' );
+    	
+       
     });
+    
+   
     </script>
 </body>
 </html>

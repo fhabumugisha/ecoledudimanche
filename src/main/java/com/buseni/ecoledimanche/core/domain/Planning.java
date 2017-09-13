@@ -34,7 +34,7 @@ public class Planning extends BaseEntityAudit {
 	
 	@Lob
 	@Column(length=500)
-	private String commentaires;
+	private String commentaire;
 
 	public Date getDate() {
 		return date;
@@ -52,24 +52,24 @@ public class Planning extends BaseEntityAudit {
 		this.moniteurs = moniteurs;
 	}
 
-	public String getCommentaires() {
-		return commentaires;
+	public String getCommentaire() {
+		return commentaire;
 	}
 
-	public void setCommentaires(String commentaires) {
-		this.commentaires = commentaires;
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
 	}
 
 	@Override
 	public String toString() {
-		return "Planning [date=" + date + ", moniteurs=" + moniteurs + ", commentaires=" + commentaires + "]";
+		return "Planning [date=" + date + ", moniteurs=" + moniteurs + ", commentaire=" + commentaire + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((commentaires == null) ? 0 : commentaires.hashCode());
+		result = prime * result + ((commentaire == null) ? 0 : commentaire.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((moniteurs == null) ? 0 : moniteurs.hashCode());
 		return result;
@@ -84,10 +84,10 @@ public class Planning extends BaseEntityAudit {
 		if (getClass() != obj.getClass())
 			return false;
 		Planning other = (Planning) obj;
-		if (commentaires == null) {
-			if (other.commentaires != null)
+		if (commentaire == null) {
+			if (other.commentaire != null)
 				return false;
-		} else if (!commentaires.equals(other.commentaires))
+		} else if (!commentaire.equals(other.commentaire))
 			return false;
 		if (date == null) {
 			if (other.date != null)

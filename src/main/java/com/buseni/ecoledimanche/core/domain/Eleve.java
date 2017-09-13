@@ -1,6 +1,7 @@
 package com.buseni.ecoledimanche.core.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -8,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -21,13 +24,20 @@ public class Eleve extends BaseEntityAudit implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@NotNull
+	
 	private String nom;
 	@NotNull
 	private String prenom;
+	@NotNull
 	private Integer age;
 	private String classe;
 	private String contact;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_naissance")
+	private Date dateNaissance;
+	
+	private String commentaire;
 		
 	@ManyToOne
 	@JoinColumn(name="groupe_id")
@@ -126,6 +136,18 @@ public class Eleve extends BaseEntityAudit implements Serializable{
 	}
 	public void setGroupe(Groupe groupe) {
 		this.groupe = groupe;
+	}
+	public String getCommentaire() {
+		return commentaire;
+	}
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
+	}
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
 	}
 	
 	

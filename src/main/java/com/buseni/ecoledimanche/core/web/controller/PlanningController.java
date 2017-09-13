@@ -1,5 +1,8 @@
 package com.buseni.ecoledimanche.core.web.controller;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -7,6 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
@@ -15,12 +19,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.buseni.ecoledimanche.account.domain.UserAccount;
+import com.buseni.ecoledimanche.account.repo.UserAccountRepository;
 import com.buseni.ecoledimanche.breadcrumbs.Navigation;
 import com.buseni.ecoledimanche.core.domain.Planning;
 import com.buseni.ecoledimanche.core.service.PlanningService;
@@ -37,16 +45,41 @@ public class PlanningController {
 	@Autowired
 	private PlanningService planningService;
 	
+	@Autowired
+	private	UserAccountRepository moniteurRepo;
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) throws Exception {
+		binder.registerCustomEditor(Set.class, "moniteurs", new CustomCollectionEditor(Set.class) {
+			protected Object convertElement(Object element) {
+				if (element instanceof UserAccount) {
+					System.out.println("Converting from Moniteur to moniteurs: " + element);
+					return element;
+				}
+				if (element instanceof String) {
+					Integer id = Integer.valueOf((String) element);
+					UserAccount moniteur = moniteurRepo.findById(id).get();
+					System.out.println("Looking up staff for id " + element + ": " + moniteur);
+					return moniteur;
+				}
+				System.out.println("Don't know what to do with: " + element);
+				return null;
+			}
+		});
+	}
+	
 	@GetMapping("/planning")
 	public String plannings(Model model, Pageable page){	
 		LOGGER.info("IN: Planning/list-GET");
 
-		Page<Planning> pagePlannings = planningService.findAll(page);
-		PageWrapper<Planning> pageWrapper = new PageWrapper<Planning>(pagePlannings, "/planning");
+		Page<Planning> pagePlanning = planningService.findAll(page);
+		PageWrapper<Planning> pageWrapper = new PageWrapper<Planning>(pagePlanning, "/planning");
 		model.addAttribute("page", pageWrapper);
-		model.addAttribute("plannings", pagePlannings.getContent());	
+		model.addAttribute("listePlanning", pagePlanning.getContent());	
 		if(!model.containsAttribute("planning")){
-			model.addAttribute("planning", new Planning());
+			Planning	planning = new Planning();
+			planning.setEnabled(true);
+			model.addAttribute("planning", planning);
 		}
 		return "planning/listePlanning";
 	}
@@ -69,7 +102,11 @@ public class PlanningController {
 	@GetMapping("/planning/new")
 	public String addPlanning(Model model){		
 		LOGGER.info("IN: Planning/new-GET");
-		model.addAttribute("planning", new Planning());
+		if(!model.containsAttribute("planning")){
+			Planning	planning = new Planning();
+			planning.setEnabled(true);
+			model.addAttribute("planning", planning);
+		}
 		return "planning/editPlanning";
 	}
 	
@@ -117,7 +154,11 @@ public class PlanningController {
 	public String module(){
 		return "planning";
 	}
-	
+	@ModelAttribute("listeMoniteurs")
+	public List<UserAccount> listeMoniteurs(){
+		return moniteurRepo.findByEnabledTrue();
+	}
+
 
 	/**
 	 * save targetURL in session

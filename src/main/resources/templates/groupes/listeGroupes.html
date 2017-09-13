@@ -166,7 +166,7 @@
 										<td th:text="${groupe.name}">Fourmiz</td>
 										<td th:text="${groupe.description}">6ans à 7 ans</td>
 										<td th:text="${groupe.anneeScolaire}">2017-2018</td>
-										<td th:text="${groupe.enabled}">Oui</td>
+										<td th:text="${groupe.enabled}? 'Oui' : 'Non'">Oui</td>
 										<td>
 											<a href="#"
 													th:href="@{/groupes/edit(id=${groupe.id})}">

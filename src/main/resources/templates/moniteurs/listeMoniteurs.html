@@ -174,9 +174,9 @@
 										<td th:text="${moniteur.phoneNumber}">077777777</td>
 										<td th:text="${moniteur.birthDate}">2017-12-12</td>
 										<td ><span th:if="${moniteur.groupe}" th:text="${moniteur.groupe.name}"></span> </td>
-										<td th:text="${moniteur.estCoequipier}">Oui</td>
-										<td th:text="${moniteur.estReferent}">Oui</td>
-										<td th:text="${moniteur.enabled}">Oui</td>
+										<td th:text="${moniteur.estCoequipier}? 'Oui' : 'Non'">Oui</td>
+										<td th:text="${moniteur.estReferent}? 'Oui' : 'Non'">Oui</td>
+										<td th:text="${moniteur.enabled}? 'Oui' : 'Non'">Oui</td>
 										<td>
 											<a href="#"
 													th:href="@{/moniteurs/edit(id=${moniteur.id})}">
