@@ -164,8 +164,8 @@
 										th:classappend="${planningStat.odd}? 'odd'">
 										<td th:text="${planning.id}">1</td>
 										<td th:text="${planning.date}">Fourmiz</td>
-										<td ><ul th:each="mono : ${moniteurs}"> 
-											<li ><span th:text="${mono.firstName} + ' ' + ${mono.lastName} "></span> <span th:if="${mono.estCoequipier}" th:text="'(Coéquipier)'"></span> </li> 
+										<td ><ul th:each="mono : ${planning.moniteurs}"> 
+											<li ><span th:text="${mono.firstName} + ' ' + ${mono.lastName} "></span> <span th:if="${#bools.isTrue(mono.estCoequipier)}" th:text="'(Coéquipier)'"></span> </li> 
 										</ul>
 										</td>
 										<td th:text="${planning.commentaire}">6ans à 7 ans</td>

@@ -1,7 +1,9 @@
 package com.buseni.ecoledimanche.core.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -12,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.apache.commons.collections.CollectionUtils;
 
 import com.buseni.ecoledimanche.account.domain.UserAccount;
 
@@ -102,6 +106,12 @@ public class Planning extends BaseEntityAudit {
 		return true;
 	}
 	
-	
+	public List<MoniteurDto>  getListeMoniteurDto(){
+		List<MoniteurDto>  listeMoniteurDto = new ArrayList<>();
+		if(CollectionUtils.isNotEmpty(moniteurs)){
+			moniteurs.forEach(m-> listeMoniteurDto.add(new MoniteurDto(m.getId(), m.getFirstName() + " " +  m.getLastName())));
+		}
+		return listeMoniteurDto;
+	}
 
 }

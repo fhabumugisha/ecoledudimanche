@@ -1,7 +1,10 @@
 package com.buseni.ecoledimanche.core.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
@@ -32,6 +36,7 @@ import com.buseni.ecoledimanche.account.repo.UserAccountRepository;
 import com.buseni.ecoledimanche.breadcrumbs.Navigation;
 import com.buseni.ecoledimanche.core.domain.Planning;
 import com.buseni.ecoledimanche.core.service.PlanningService;
+import com.buseni.ecoledimanche.core.web.MoniteurEditor;
 import com.buseni.ecoledimanche.exception.BusinessException;
 import com.buseni.ecoledimanche.exception.ErrorsHelper;
 import com.buseni.ecoledimanche.utils.PageWrapper;
@@ -50,6 +55,14 @@ public class PlanningController {
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {
+		
+		 //The date format to parse or output your dates
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    //Create a new CustomDateEditor
+	    CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+	   //Register it as custom editor for the Date type
+	    binder.registerCustomEditor(Date.class, editor);
+	    
 		binder.registerCustomEditor(Set.class, "moniteurs", new CustomCollectionEditor(Set.class) {
 			protected Object convertElement(Object element) {
 				if (element instanceof UserAccount) {
@@ -66,6 +79,7 @@ public class PlanningController {
 				return null;
 			}
 		});
+		//binder.registerCustomEditor(UserAccount.class,  new MoniteurEditor(moniteurRepo));
 	}
 	
 	@GetMapping("/planning")
@@ -155,8 +169,8 @@ public class PlanningController {
 		return "planning";
 	}
 	@ModelAttribute("listeMoniteurs")
-	public List<UserAccount> listeMoniteurs(){
-		return moniteurRepo.findByEnabledTrue();
+	public Set<UserAccount> listeMoniteurs(){
+		return moniteurRepo.findByEnabledTrue().stream().collect(Collectors.toSet());
 	}
 
 
