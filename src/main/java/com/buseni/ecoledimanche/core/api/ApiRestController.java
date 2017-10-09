@@ -7,6 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.buseni.ecoledimanche.account.domain.UserAccount;
@@ -19,6 +24,7 @@ import com.buseni.ecoledimanche.core.service.EleveService;
 import com.buseni.ecoledimanche.core.service.GroupeService;
 import com.buseni.ecoledimanche.core.service.LeconService;
 import com.buseni.ecoledimanche.core.service.ThemeLeconService;
+import com.buseni.ecoledimanche.exception.BusinessException;
 
 @RestController
 public class ApiRestController {
@@ -48,6 +54,41 @@ private LeconService leconService;
 		return pageThemes.getContent();
 		
 		
+	}
+	
+
+	@GetMapping(value = "/api/getTheme/{themeId}")
+	public ThemeLecon getTheme(@PathVariable("themeId") Integer themeId) {
+		return themeLeconService.findById(themeId);
+	}
+ 
+	@PostMapping(value = "/api/createTheme")
+	public ThemeLecon createTheme(@RequestBody ThemeLecon theme) {
+		ThemeLecon newTheme = null;
+		try {
+			newTheme=  themeLeconService.addOrUpdate(theme);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newTheme;
+	}
+ 
+	@PostMapping(value = "/api/updateTheme")
+	public ThemeLecon updateTheme(@RequestBody ThemeLecon theme) {
+		ThemeLecon newTheme = null;
+		try {
+			newTheme =  themeLeconService.update(theme);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newTheme;
+	}
+	
+	@GetMapping(value = "/api/deleteTheme/{themeId}")
+	public void deleteTheme(@PathVariable("themeId") Integer themeId) {
+		themeLeconService.delete(themeId);
 	}
 	
 	@GetMapping("/api/groupes")
