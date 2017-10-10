@@ -27,6 +27,7 @@ import com.buseni.ecoledimanche.core.service.ThemeLeconService;
 import com.buseni.ecoledimanche.exception.BusinessException;
 
 @RestController
+@RequestMapping("/api/themes")
 public class ApiRestController {
 	
 	@Autowired
@@ -47,7 +48,7 @@ public class ApiRestController {
 @Autowired
 private LeconService leconService;
 	
-	@GetMapping("/api/themes")
+	@GetMapping("/all")
 	public List<ThemeLecon>  getThemes(Model model,  Pageable page){
 
 		Page<ThemeLecon> pageThemes = themeLeconService.findAll(page);
@@ -57,12 +58,12 @@ private LeconService leconService;
 	}
 	
 
-	@GetMapping(value = "/api/getTheme/{themeId}")
+	@GetMapping(value = "/getTheme/{themeId}")
 	public ThemeLecon getTheme(@PathVariable("themeId") Integer themeId) {
 		return themeLeconService.findById(themeId);
 	}
  
-	@PostMapping(value = "/api/createTheme")
+	@PostMapping(value = "/createTheme")
 	public ThemeLecon createTheme(@RequestBody ThemeLecon theme) {
 		ThemeLecon newTheme = null;
 		try {
@@ -74,7 +75,7 @@ private LeconService leconService;
 		return newTheme;
 	}
  
-	@PostMapping(value = "/api/updateTheme")
+	@PostMapping(value = "/updateTheme")
 	public ThemeLecon updateTheme(@RequestBody ThemeLecon theme) {
 		ThemeLecon newTheme = null;
 		try {
@@ -86,7 +87,7 @@ private LeconService leconService;
 		return newTheme;
 	}
 	
-	@GetMapping(value = "/api/deleteTheme/{themeId}")
+	@GetMapping(value = "/deleteTheme/{themeId}")
 	public void deleteTheme(@PathVariable("themeId") Integer themeId) {
 		themeLeconService.delete(themeId);
 	}
