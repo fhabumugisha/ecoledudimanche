@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,8 +36,8 @@ public class SpringSecurityConfig   extends WebSecurityConfigurerAdapter
 	@Autowired
 	
 	public  void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { 
-		auth.userDetailsService(userAccountService).passwordEncoder(passwordEncoder());
-		//auth.inMemoryAuthentication().withUser("admin@edd").password("password").roles("MONITEUR");
+		//auth.userDetailsService(userAccountService).passwordEncoder(passwordEncoder());
+		auth.inMemoryAuthentication().withUser("admin@edd").password("password").roles("MONITEUR");
 	}
 	
 	@Autowired
@@ -70,6 +71,10 @@ public class SpringSecurityConfig   extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception {
 		 http.authorizeRequests()
 		.antMatchers("/api/**").permitAll()
+		.antMatchers(
+                HttpMethod.GET,
+                "/v2/api-docs","/swagger-ui.html", "/webjars/**", "favicon.ico"
+        ).permitAll()
 		 .anyRequest().authenticated()
 		.and()
 			.formLogin().loginPage("/login").permitAll().usernameParameter("email")
@@ -78,7 +83,9 @@ public class SpringSecurityConfig   extends WebSecurityConfigurerAdapter
         .and()
         	.logout().permitAll() 	
          .and()
-         .rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(604800)	;
+         .rememberMe()
+         .tokenRepository(persistentTokenRepository())
+         .tokenValiditySeconds(604800)	;
 	}
 	@Bean(name = "sessionRegistry")
 	public SessionRegistry sessionRegistry() {
@@ -86,7 +93,17 @@ public class SpringSecurityConfig   extends WebSecurityConfigurerAdapter
 	}
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	web.ignoring().antMatchers("/resources/**").antMatchers("/static/**").antMatchers("/css/**").antMatchers("/images/**");
+	web.ignoring().antMatchers("/resources/**")
+					.antMatchers("/static/**")
+					.antMatchers("/css/**")
+					.antMatchers("/images/**")
+					.antMatchers("/v2/api-docs/**")
+					.antMatchers("/swagger.json")
+					.antMatchers("/swagger-ui.html")
+					.antMatchers("/webjars/**")
+					.antMatchers("/configuration/ui")
+					.antMatchers("/configuration/security")
+					.antMatchers("/swagger-resources");
 	 
 	}
 	
