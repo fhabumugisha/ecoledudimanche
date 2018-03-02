@@ -1,21 +1,15 @@
 package com.buseni.ecoledimanche.core.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.buseni.ecoledimanche.account.domain.UserAccount;
 
 @Entity
 @Table(name = "groupe_annuel")

@@ -5,22 +5,18 @@ package com.buseni.ecoledimanche.core.service.impl;
 
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.buseni.ecoledimanche.core.domain.GroupeAnnuel;
 import com.buseni.ecoledimanche.core.repo.GroupeAnnuelRepo;
 import com.buseni.ecoledimanche.core.service.GroupeAnnuelService;
 import com.buseni.ecoledimanche.core.web.GroupeAnnuelSearch;
 import com.buseni.ecoledimanche.exception.BusinessException;
-import com.buseni.ecoledimanche.exception.CustomError;
-import com.buseni.ecoledimanche.exception.CustomErrorBuilder;
 
 /**
  * @author habumugisha

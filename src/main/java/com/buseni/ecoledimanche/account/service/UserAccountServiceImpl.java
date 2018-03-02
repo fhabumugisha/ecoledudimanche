@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import com.buseni.ecoledimanche.account.domain.PasswordResetToken;
 import com.buseni.ecoledimanche.account.domain.Privilege;

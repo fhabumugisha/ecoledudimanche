@@ -54,7 +54,7 @@ public class EleveServiceImpl implements EleveService {
 //				}
 				if(StringUtils.isEmpty(eleve.getPrenom())){
 					CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
-					CustomError  ce = ceb.field("prenom").errorArgs(new String[] { "Prénom" }).buid();
+					CustomError  ce = ceb.field("prenom").errorArgs(new String[] { "Prenom" }).buid();
 					be.addError(ce);
 				
 				}
@@ -97,7 +97,7 @@ public class EleveServiceImpl implements EleveService {
 //		}
 		if(StringUtils.isEmpty(eleve.getPrenom())){
 			CustomErrorBuilder ceb =  new CustomErrorBuilder("error.eleves.field.null");			
-			CustomError  ce = ceb.field("prenom").errorArgs(new String[] { "Prénom" }).buid();
+			CustomError  ce = ceb.field("prenom").errorArgs(new String[] { "Prenom" }).buid();
 			be.addError(ce);
 		
 		}

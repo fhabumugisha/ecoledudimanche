@@ -6,9 +6,10 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Entity
 @Table(name = "annee_scolaire")
