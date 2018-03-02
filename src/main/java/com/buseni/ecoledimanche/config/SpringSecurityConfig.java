@@ -36,8 +36,8 @@ public class SpringSecurityConfig   extends WebSecurityConfigurerAdapter
 	@Autowired
 	
 	public  void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { 
-		//auth.userDetailsService(userAccountService).passwordEncoder(passwordEncoder());
-		auth.inMemoryAuthentication().withUser("admin@edd").password("password").roles("MONITEUR");
+		auth.userDetailsService(userAccountService).passwordEncoder(passwordEncoder());
+		//auth.inMemoryAuthentication().withUser("admin@edd").password("password").roles("MONITEUR");
 	}
 	
 	@Autowired
@@ -86,6 +86,7 @@ public class SpringSecurityConfig   extends WebSecurityConfigurerAdapter
          .rememberMe()
          .tokenRepository(persistentTokenRepository())
          .tokenValiditySeconds(604800)	;
+		 //http.authorizeRequests().anyRequest().permitAll();
 	}
 	@Bean(name = "sessionRegistry")
 	public SessionRegistry sessionRegistry() {

@@ -56,8 +56,10 @@ dependencies {
 
 	
 	
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	
+	//compile('org.springframework.boot:spring-boot-starter-actuator')
+
+//	compile('org.springframework.boot:spring-boot-actuator-docs')
+
 	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
 	compile('org.springframework.session:spring-session-core')
 	runtime('org.springframework.boot:spring-boot-devtools')
